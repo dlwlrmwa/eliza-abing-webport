@@ -15,9 +15,9 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: "Portfolio - Your Name",
-  description: "A modern portfolio showcasing my work and experience",
-  generator: "v0.app",
+  title: "Eliza Marie Abing - Portfolio",
+  description: "My portfolio showcasing my work and experience",
+  icons: ("/eli-icon.png"),
 }
 
 export default function RootLayout({
@@ -30,7 +30,7 @@ export default function RootLayout({
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${playfair.variable} antialiased`}>
         <Suspense fallback={<div>Loading...</div>}>
           <Navigation />
-          <div className="md:ml-64">{children}</div>
+          <div>{children}</div>
           <Analytics />
         </Suspense>
       </body>

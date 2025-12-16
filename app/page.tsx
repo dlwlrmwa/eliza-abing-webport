@@ -14,8 +14,7 @@ export default function HomePage() {
               Hello, I'm <span className="text-primary">Eliza Marie Abing</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-              A passionate creative professional crafting beautiful digital experiences with attention to detail and
-              user-centered design.
+              wala pa
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
@@ -32,6 +31,7 @@ export default function HomePage() {
           </div>
         </div>
 
+
         {/* Decorative Elements */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -40,7 +40,7 @@ export default function HomePage() {
       </section>
 
       {/* About Me Section */}
-      <section className="py-20 px-6 lg:px-8">
+      <section id="about" className="py-20 px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="mb-16 text-center">
@@ -53,7 +53,7 @@ export default function HomePage() {
           {/* Profile Section */}
           <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
             <div className="relative aspect-square rounded-2xl overflow-hidden bg-secondary">
-              <Image src="/professional-portrait.png" alt="Profile photo" fill className="object-cover" />
+              <Image src="/my-portrait.jpg" alt="Profile photo" fill className="object-cover" />
             </div>
 
             <div>
@@ -155,24 +155,32 @@ export default function HomePage() {
                 Journal
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                Read my thoughts on design, development, and creative processes.
+                Read my thoughts, development, and creative processes.
               </p>
             </Link>
 
             <Link
-              href="/contact"
+              href="/certificates"
               className="group p-8 bg-card rounded-2xl border border-border hover:border-primary transition-all hover:shadow-lg"
             >
               <h3 className="text-2xl font-serif font-semibold mb-3 text-foreground group-hover:text-primary transition-colors">
-                Get in Touch
+                Certificates
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                Have a project in mind? Let's collaborate and create something amazing together.
+                Browse the certifications and training I've completed along the way.
               </p>
             </Link>
           </div>
         </div>
       </section>
+      {/* Footer */}
+      <footer className="py-8 px-6 lg:px-8 border-t border-border">
+        <div className="max-w-6xl mx-auto text-center">
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Eliza Marie Abing. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </main>
   )
 }
