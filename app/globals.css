@@ -5,25 +5,37 @@
 
 :root {
   /* Updated to use pastel pink color palette */
-  --background: oklch(0.99 0.01 340); /* Very light pink-tinted white */
-  --foreground: oklch(0.25 0.02 340); /* Dark charcoal with pink undertone */
-  --card: oklch(1 0 0); /* Pure white for cards */
+  --background: oklch(0.99 0.01 340);
+  /* Very light pink-tinted white */
+  --foreground: oklch(0.25 0.02 340);
+  /* Dark charcoal with pink undertone */
+  --card: oklch(1 0 0);
+  /* Pure white for cards */
   --card-foreground: oklch(0.25 0.02 340);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.25 0.02 340);
-  --primary: oklch(0.78 0.12 350); /* Soft pastel pink */
-  --primary-foreground: oklch(0.25 0.02 340); /* Dark text on pink */
-  --secondary: oklch(0.95 0.04 345); /* Very light pink */
+  --primary: oklch(0.78 0.12 350);
+  /* Soft pastel pink */
+  --primary-foreground: oklch(0.25 0.02 340);
+  /* Dark text on pink */
+  --secondary: oklch(0.95 0.04 345);
+  /* Very light pink */
   --secondary-foreground: oklch(0.25 0.02 340);
-  --muted: oklch(0.96 0.03 345); /* Subtle pink muted background */
-  --muted-foreground: oklch(0.5 0.02 340); /* Medium gray with pink hint */
-  --accent: oklch(0.88 0.08 348); /* Light pastel pink accent */
+  --muted: oklch(0.96 0.03 345);
+  /* Subtle pink muted background */
+  --muted-foreground: oklch(0.5 0.02 340);
+  /* Medium gray with pink hint */
+  --accent: oklch(0.88 0.08 348);
+  /* Light pastel pink accent */
   --accent-foreground: oklch(0.25 0.02 340);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.03 345); /* Light pink border */
-  --input: oklch(0.96 0.02 345); /* Very light pink input background */
-  --ring: oklch(0.78 0.12 350); /* Pink focus ring */
+  --border: oklch(0.92 0.03 345);
+  /* Light pink border */
+  --input: oklch(0.96 0.02 345);
+  /* Very light pink input background */
+  --ring: oklch(0.78 0.12 350);
+  /* Pink focus ring */
   --chart-1: oklch(0.78 0.12 350);
   --chart-2: oklch(0.7 0.15 340);
   --chart-3: oklch(0.85 0.1 355);
@@ -119,7 +131,94 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Smooth scroll offset for fixed navbar */
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
+  /* Touch-friendly interactions */
+  @media (hover: none) and (pointer: coarse) {
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+  }
+
+  /* Animation delays */
+  .delay-1000 {
+    animation-delay: 1000ms;
+  }
+
+  /* Fade in animation */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+
+  /* Glassmorphism utilities */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Improved focus styles for accessibility */
+  *:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* 3D Carousel Styles */
+  .carousel-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+
+  .carousel-card {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Smooth continuous animation */
+  @keyframes carousel-scroll {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  .carousel-continuous {
+    animation: carousel-scroll 60s linear infinite;
+  }
+
+  .carousel-continuous:hover {
+    animation-play-state: paused;
   }
 }

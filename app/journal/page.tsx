@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Calendar, Clock } from "lucide-react"
+import { SparkleCursor } from "@/components/sparkle-cursor"
 
 const posts = [
   {
@@ -40,65 +41,80 @@ export default function JournalPage() {
   }
 
   return (
-    <main className="min-h-screen pt-16">
-      <div className="max-w-4xl mx-auto px-6 lg:px-8 py-20">
-        {/* Header */}
-        <div className="mb-16 text-center">
-          <h1 className="text-5xl md:text-6xl font-serif font-bold text-foreground mb-6">Journal</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Visual diaries and the stories behind the images.
-          </p>
+    <>
+      <SparkleCursor />
+      <main className="min-h-screen pt-16 relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse delay-1000" />
         </div>
 
-        {/* Posts List */}
-        <div className="space-y-4">
-          {posts.map((post) => (
-            <article
-              key={post.id}
-              className="group p-8 bg-card rounded-2xl border border-border hover:border-primary transition-all hover:shadow-lg"
-            >
-              <Link href={`/journal/${post.slug}`}>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground mb-1">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    <time dateTime={post.date}>
-                      {post.endDate ? (
-                        formatDateRange(post.date, post.endDate)
-                      ) : (
-                        new Date(post.date).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })
-                      )}
-                    </time>
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 py-20">
+          {/* Header with Glassmorphism */}
+          <div className="mb-16 text-center">
+            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+              Journal
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Visual diaries and the stories behind the images.
+            </p>
+          </div>
+
+          {/* Posts List with Glassmorphism */}
+          <div className="space-y-6">
+            {posts.map((post) => (
+              <article
+                key={post.id}
+                className="group p-8 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 hover:border-primary transition-all hover:shadow-2xl hover:shadow-primary/20 hover:scale-105 duration-300"
+              >
+                <Link href={`/journal/${post.slug}`}>
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur-sm rounded-full">
+                      <Calendar className="h-4 w-4" />
+                      <time dateTime={post.date}>
+                        {post.endDate ? (
+                          formatDateRange(post.date, post.endDate)
+                        ) : (
+                          new Date(post.date).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })
+                        )}
+                      </time>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur-sm rounded-full">
+                      <Clock className="h-4 w-4" />
+                      <span>{post.readTime}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4" />
-                    <span>{post.readTime}</span>
+
+                  <h2 className="text-2xl md:text-3xl font-serif font-semibold mb-4 text-foreground group-hover:text-primary transition-colors">
+                    {post.title}
+                  </h2>
+
+                  <p className="text-muted-foreground leading-relaxed mb-4">{post.excerpt}</p>
+
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary font-medium rounded-full group-hover:bg-primary group-hover:text-white transition-all">
+                    <span>Click for more</span>
+                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                   </div>
-                </div>
-
-                <h2 className="text-2xl md:text-3xl font-serif font-semibold mb-3 text-foreground group-hover:text-primary transition-colors">
-                  {post.title}
-                </h2>
-
-                <p className="text-muted-foreground leading-relaxed mb-4">{post.excerpt}</p>
-
-                <span className="text-primary font-medium group-hover:underline">Click for more →</span>
-              </Link>
-            </article>
-          ))}
+                </Link>
+              </article>
+            ))}
+          </div>
         </div>
-      </div>
-      {/* Footer */}
-      <footer className="py-12 px-6 border-t border-border mt-19">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Eliza Marie Abing. All rights reserved.
-          </p>
-        </div>
-      </footer>
-    </main>
+
+        {/* Footer */}
+        <footer className="py-12 px-6 border-t border-white/20 bg-white/5 backdrop-blur-sm mt-20">
+          <div className="max-w-6xl mx-auto text-center">
+            <p className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} Eliza Marie Abing. All rights reserved.
+            </p>
+          </div>
+        </footer>
+      </main>
+    </>
   )
 }
