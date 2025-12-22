@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { ChevronLeft, ChevronRight, Pause, Play, MapPin, FileText } from "lucide-react"
-import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog"
+import { useState } from "react"
+import { MapPin, FileText } from "lucide-react"
+import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogHeader } from "@/components/ui/dialog"
 
 type Slide = {
     id: number
@@ -222,43 +222,9 @@ const reflectionPages: ReflectionPage[] = [
     },
 ]
 
-const createCollages = () => {
-    const collages = []
-    for (let i = 0; i < slides.length; i += 5) {
-        collages.push(slides.slice(i, i + 5))
-    }
-    return collages
-}
-
 export default function CebuBoholTour() {
-    const [currentCollage, setCurrentCollage] = useState(0)
-    const [isPlaying, setIsPlaying] = useState(true)
-
-    const collages = createCollages()
-
-    useEffect(() => {
-        if (!isPlaying) return
-
-        const interval = setInterval(() => {
-            setCurrentCollage((prev) => (prev === collages.length - 1 ? 0 : prev + 1))
-        }, 6000)
-
-        return () => clearInterval(interval)
-    }, [isPlaying, collages.length])
-
-    const goToPrevious = () => {
-        setIsPlaying(false)
-        setCurrentCollage((prev) => (prev === 0 ? collages.length - 1 : prev - 1))
-    }
-
-    const goToNext = () => {
-        setIsPlaying(false)
-        setCurrentCollage((prev) => (prev === collages.length - 1 ? 0 : prev + 1))
-    }
-
-    const togglePlayPause = () => {
-        setIsPlaying(!isPlaying)
-    }
+    const [isGalleryOpen, setIsGalleryOpen] = useState(false)
+    const [selectedPhoto, setSelectedPhoto] = useState<Slide | null>(null)
 
     return (
         <main className="min-h-screen bg-background">
@@ -278,270 +244,82 @@ export default function CebuBoholTour() {
                 </div>
             </div>
 
-            {/* Photo Collage Carousel */}
+            {/* Photo Gallery Grid */}
             <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
-                <div className="mb-8 md:mb-12">
-                    <h2 className="text-3xl md:text-4xl font-serif font-bold text-center mb-3">
+                <div className="mb-8 md:mb-12 text-center">
+                    <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3">
                         Journey Highlights
                     </h2>
-                    <p className="text-center text-muted-foreground max-w-2xl mx-auto">
-                        Explore memorable moments from our four-day educational adventure
+                    <p className="text-muted-foreground max-w-2xl mx-auto">
+                        View 15 featured photos from the four-day educational adventure
                     </p>
-                </div>
-
-                <div className="relative">
-                    {/* Collage Container */}
-                    <div className="relative overflow-hidden rounded-2xl md:rounded-3xl shadow-2xl bg-card border border-border p-3 md:p-4 lg:p-8">
-                        <div className="relative h-[400px] md:h-[600px] lg:h-[700px]">
-                            {collages.map((collage, collageIdx) => (
-                                <div
-                                    key={collageIdx}
-                                    className={`absolute inset-0 transition-all duration-700 ${collageIdx === currentCollage
-                                        ? "opacity-100 translate-x-0"
-                                        : collageIdx < currentCollage
-                                            ? "opacity-0 -translate-x-full"
-                                            : "opacity-0 translate-x-full"
-                                        }`}
-                                >
-                                    {/* Mobile Layout - Stack vertically */}
-                                    <div className="md:hidden flex flex-col gap-2 h-full">
-                                        {collage.slice(0, 3).map((photo) => (
-                                            <Dialog key={photo.id}>
-                                                <DialogTrigger asChild>
-                                                    <button className="flex-1 rounded-xl overflow-hidden group relative focus:outline-none focus:ring-2 focus:ring-primary">
-                                                        <img
-                                                            src={photo.image}
-                                                            alt={photo.title}
-                                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                                        />
-                                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-                                                        <div className="absolute bottom-2 left-2 right-2">
-                                                            <span className="inline-block mb-1 px-2 py-0.5 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium">
-                                                                Day {photo.day}
-                                                            </span>
-                                                            <h3 className="text-white font-bold text-xs drop-shadow-lg line-clamp-1">
-                                                                {photo.title}
-                                                            </h3>
-                                                        </div>
-                                                    </button>
-                                                </DialogTrigger>
-                                                <DialogContent className="w-[95vw] max-w-3xl h-[85vh] p-4">
-                                                    <DialogTitle className="text-xl font-serif font-bold mb-2">
-                                                        {photo.title}
-                                                    </DialogTitle>
-                                                    <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
-                                                        <MapPin className="h-3 w-3" />
-                                                        <span>{photo.location}</span>
-                                                        <span className="ml-1 px-2 py-0.5 bg-primary/10 rounded-full text-primary">
-                                                            Day {photo.day}
-                                                        </span>
-                                                    </div>
-                                                    <div className="flex items-center justify-center mb-3 max-h-[55vh]">
-                                                        <img
-                                                            src={photo.image}
-                                                            alt={photo.title}
-                                                            className="max-w-full max-h-full object-contain rounded-lg"
-                                                        />
-                                                    </div>
-                                                    <p className="text-sm text-muted-foreground leading-relaxed overflow-y-auto max-h-[15vh]">
-                                                        {photo.description}
-                                                    </p>
-                                                </DialogContent>
-                                            </Dialog>
-                                        ))}
-                                    </div>
-
-                                    {/* Desktop Layout - Grid collage */}
-                                    <div className="hidden md:grid grid-cols-12 grid-rows-12 gap-3 h-full">
-                                        {/* Large main image */}
-                                        {collage[0] && (
-                                            <Dialog>
-                                                <DialogTrigger asChild>
-                                                    <button className="col-span-7 row-span-7 rounded-2xl overflow-hidden group relative focus:outline-none focus:ring-4 focus:ring-primary">
-                                                        <img
-                                                            src={collage[0].image}
-                                                            alt={collage[0].title}
-                                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                                        />
-                                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-                                                        <div className="absolute bottom-4 left-4 right-4">
-                                                            <span className="inline-block mb-2 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium">
-                                                                Day {collage[0].day}
-                                                            </span>
-                                                            <h3 className="text-white font-bold text-lg drop-shadow-lg">
-                                                                {collage[0].title}
-                                                            </h3>
-                                                        </div>
-                                                    </button>
-                                                </DialogTrigger>
-                                                <DialogContent className="max-w-4xl w-[90vw] max-h-[85vh] p-6 overflow-y-auto">
-                                                    <DialogTitle className="text-2xl md:text-3xl font-serif font-bold mb-3">
-                                                        {collage[0].title}
-                                                    </DialogTitle>
-                                                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                                                        <MapPin className="h-4 w-4" />
-                                                        <span>{collage[0].location}</span>
-                                                        <span className="ml-2 px-2 py-0.5 bg-primary/10 rounded-full text-primary">
-                                                            Day {collage[0].day}
-                                                        </span>
-                                                    </div>
-                                                    <div className="flex items-center justify-center mb-4 max-h-[50vh]">
-                                                        <img
-                                                            src={collage[0].image}
-                                                            alt={collage[0].title}
-                                                            className="max-w-full max-h-full object-contain rounded-lg"
-                                                        />
-                                                    </div>
-                                                    <p className="text-muted-foreground leading-relaxed">
-                                                        {collage[0].description}
-                                                    </p>
-                                                </DialogContent>
-                                            </Dialog>
-                                        )}
-
-                                        {/* Tall right image */}
-                                        {collage[1] && (
-                                            <Dialog>
-                                                <DialogTrigger asChild>
-                                                    <button className="col-span-5 row-span-7 rounded-2xl overflow-hidden group relative focus:outline-none focus:ring-4 focus:ring-primary">
-                                                        <img
-                                                            src={collage[1].image}
-                                                            alt={collage[1].title}
-                                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                                        />
-                                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-                                                        <div className="absolute bottom-4 left-4 right-4">
-                                                            <span className="inline-block mb-2 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium">
-                                                                Day {collage[1].day}
-                                                            </span>
-                                                            <h3 className="text-white font-bold text-sm drop-shadow-lg">
-                                                                {collage[1].title}
-                                                            </h3>
-                                                        </div>
-                                                    </button>
-                                                </DialogTrigger>
-                                                <DialogContent className="max-w-4xl w-[90vw] max-h-[85vh] p-6 overflow-y-auto">
-                                                    <DialogTitle className="text-2xl md:text-3xl font-serif font-bold mb-3">
-                                                        {collage[1].title}
-                                                    </DialogTitle>
-                                                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                                                        <MapPin className="h-4 w-4" />
-                                                        <span>{collage[1].location}</span>
-                                                        <span className="ml-2 px-2 py-0.5 bg-primary/10 rounded-full text-primary">
-                                                            Day {collage[1].day}
-                                                        </span>
-                                                    </div>
-                                                    <div className="flex items-center justify-center mb-4 max-h-[50vh]">
-                                                        <img
-                                                            src={collage[1].image}
-                                                            alt={collage[1].title}
-                                                            className="max-w-full max-h-full object-contain rounded-lg"
-                                                        />
-                                                    </div>
-                                                    <p className="text-muted-foreground leading-relaxed">
-                                                        {collage[1].description}
-                                                    </p>
-                                                </DialogContent>
-                                            </Dialog>
-                                        )}
-
-                                        {/* Bottom row images */}
-                                        {[2, 3, 4].map((idx) => collage[idx] && (
-                                            <Dialog key={collage[idx].id}>
-                                                <DialogTrigger asChild>
-                                                    <button className="col-span-4 row-span-5 rounded-2xl overflow-hidden group relative focus:outline-none focus:ring-4 focus:ring-primary">
-                                                        <img
-                                                            src={collage[idx].image}
-                                                            alt={collage[idx].title}
-                                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                                        />
-                                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-                                                        <div className="absolute bottom-3 left-3 right-3">
-                                                            <span className="inline-block mb-1 px-2 py-0.5 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium">
-                                                                Day {collage[idx].day}
-                                                            </span>
-                                                            <h3 className="text-white font-bold text-xs drop-shadow-lg line-clamp-1">
-                                                                {collage[idx].title}
-                                                            </h3>
-                                                        </div>
-                                                    </button>
-                                                </DialogTrigger>
-                                                <DialogContent className="max-w-4xl w-[90vw] max-h-[85vh] p-6 overflow-y-auto">
-                                                    <DialogTitle className="text-2xl md:text-3xl font-serif font-bold mb-3">
-                                                        {collage[idx].title}
-                                                    </DialogTitle>
-                                                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                                                        <MapPin className="h-4 w-4" />
-                                                        <span>{collage[idx].location}</span>
-                                                        <span className="ml-2 px-2 py-0.5 bg-primary/10 rounded-full text-primary">
-                                                            Day {collage[idx].day}
-                                                        </span>
-                                                    </div>
-                                                    <div className="flex items-center justify-center mb-4 max-h-[50vh]">
-                                                        <img
-                                                            src={collage[idx].image}
-                                                            alt={collage[idx].title}
-                                                            className="max-w-full max-h-full object-contain rounded-lg"
-                                                        />
-                                                    </div>
-                                                    <p className="text-muted-foreground leading-relaxed">
-                                                        {collage[idx].description}
-                                                    </p>
-                                                </DialogContent>
-                                            </Dialog>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Navigation Arrows */}
-                        <button
-                            onClick={goToPrevious}
-                            className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 md:p-4 rounded-full shadow-xl transition-all hover:scale-110 backdrop-blur-sm z-20"
-                            aria-label="Previous collage"
-                        >
-                            <ChevronLeft className="h-4 w-4 md:h-6 md:w-6 text-gray-900" />
-                        </button>
-                        <button
-                            onClick={goToNext}
-                            className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 md:p-4 rounded-full shadow-xl transition-all hover:scale-110 backdrop-blur-sm z-20"
-                            aria-label="Next collage"
-                        >
-                            <ChevronRight className="h-4 w-4 md:h-6 md:w-6 text-gray-900" />
-                        </button>
-
-                        {/* Controls */}
-                        <div className="absolute bottom-3 md:bottom-6 left-3 md:left-6 right-3 md:right-6 flex items-center justify-between z-20">
-                            <div className="flex items-center gap-2 md:gap-3">
-                                <div className="bg-white/90 backdrop-blur-sm px-3 md:px-4 py-1.5 md:py-2 rounded-full shadow-lg">
-                                    <span className="text-gray-900 text-xs md:text-sm font-medium">
-                                        {currentCollage + 1} / {collages.length}
-                                    </span>
+                    <Dialog open={isGalleryOpen} onOpenChange={setIsGalleryOpen}>
+                        <DialogTrigger asChild>
+                            <button className="mt-6 inline-flex items-center px-5 py-2.5 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors shadow-lg">
+                                Open Photo Gallery
+                            </button>
+                        </DialogTrigger>
+                        <DialogContent className="w-[95vw] max-w-[1600px] max-h-[92vh] bg-white/10 backdrop-blur-xl border border-white/20 flex flex-col p-0 overflow-hidden">
+                            <DialogHeader className="px-6 py-4 bg-white/5 backdrop-blur-sm border-b border-white/10">
+                                <DialogTitle className="text-2xl font-serif">Gallery Grid</DialogTitle>
+                            </DialogHeader>
+                            <div className="flex-1 overflow-y-auto p-6">
+                                <div className="grid grid-cols-5 gap-4">
+                                    {slides.slice(0, 15).map((photo) => (
+                                        <button
+                                            key={photo.id}
+                                            onClick={() => setSelectedPhoto(photo)}
+                                            className="group relative aspect-square w-full overflow-hidden rounded-xl bg-white/5 border border-white/10 hover:border-primary/50 transition-all duration-300"
+                                        >
+                                            <img
+                                                src={photo.image}
+                                                alt={photo.title}
+                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                            />
+                                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />
+                                            <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/80 to-transparent text-left">
+                                                <p className="text-white text-xs font-medium truncate">{photo.title}</p>
+                                            </div>
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    {/* Progress Dots */}
-                    <div className="flex justify-center gap-2 mt-6 md:mt-8">
-                        {collages.map((_, idx) => (
-                            <button
-                                key={idx}
-                                onClick={() => {
-                                    setIsPlaying(false)
-                                    setCurrentCollage(idx)
-                                }}
-                                className={`h-1.5 md:h-2 rounded-full transition-all ${idx === currentCollage
-                                    ? "w-6 md:w-8 bg-primary"
-                                    : "w-1.5 md:w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
-                                    }`}
-                                aria-label={`Go to collage ${idx + 1}`}
-                            />
-                        ))}
-                    </div>
+                        </DialogContent>
+                    </Dialog>
                 </div>
             </div>
+
+            {/* Photo Detail Modal */}
+            {selectedPhoto && (
+                <Dialog open={!!selectedPhoto} onOpenChange={() => setSelectedPhoto(null)}>
+                    <DialogContent className="max-w-4xl w-[95vw] max-h-[90vh] p-0 bg-white/10 backdrop-blur-xl border-white/20 overflow-hidden">
+                        <DialogHeader className="p-6 pb-4 bg-white/5 backdrop-blur-sm border-b border-white/20">
+                            <DialogTitle className="text-2xl font-serif">{selectedPhoto.title}</DialogTitle>
+                        </DialogHeader>
+                        <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
+                            <div className="relative w-full aspect-video bg-black/20">
+                                <img
+                                    src={selectedPhoto.image}
+                                    alt={selectedPhoto.title}
+                                    className="w-full h-full object-contain"
+                                />
+                            </div>
+                            <div className="p-6 space-y-3">
+                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                    <MapPin className="h-4 w-4" />
+                                    <span>{selectedPhoto.location}</span>
+                                    <span className="ml-2 px-2 py-0.5 bg-primary/10 rounded-full text-primary">
+                                        Day {selectedPhoto.day}
+                                    </span>
+                                </div>
+                                <p className="text-muted-foreground leading-relaxed">
+                                    {selectedPhoto.description}
+                                </p>
+                            </div>
+                        </div>
+                    </DialogContent>
+                </Dialog>
+            )}
 
             {/* Reflection Paper Section */}
             <div className="bg-gradient-to-br from-purple-50/50 via-blue-50/50 to-pink-50/50 dark:from-gray-900/50 dark:via-purple-900/10 dark:to-blue-900/10 py-12 md:py-20">

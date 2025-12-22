@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Facebook, Github, Linkedin, Menu, X } from "lucide-react"
@@ -104,9 +105,16 @@ export function Navigation() {
                 setActiveSection("")
               }
             }}
-            className="text-2xl font-serif font-semibold text-foreground hover:text-primary transition-all duration-300 hover:scale-105"
+            className="flex items-center hover:opacity-80 transition-opacity duration-300 hover:scale-105 flex-shrink-0"
           >
-            Eliza Marie Abing
+            <Image
+              src="/heart-logo.png"
+              alt="Eliza Abing Logo"
+              width={60}
+              height={60}
+              priority
+              className="h-30 w-35"
+            />
           </Link>
 
           <div className="flex items-center gap-8">
@@ -137,44 +145,16 @@ export function Navigation() {
                 </Link>
               )
             })}
+          </div>
 
+          <div className="flex items-center gap-7">
             <a
               href="/eliza-abing-cv.pdf"
               download="eliza-abing-cv.pdf"
-              className="ml-4 inline-flex items-center justify-center px-6 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-primary to-primary/80 rounded-full hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 hover:scale-105"
+              className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-primary to-primary/80 rounded-full hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 hover:scale-105"
             >
               Download CV
             </a>
-
-            <div className="flex items-center gap-4 ml-4">
-              <Link
-                href={socialLinks.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub Profile"
-                className="transform hover:scale-110 transition-transform duration-300"
-              >
-                <Github className="h-5 w-5 text-foreground hover:text-primary transition-colors" />
-              </Link>
-              <Link
-                href={socialLinks.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook Profile"
-                className="transform hover:scale-110 transition-transform duration-300"
-              >
-                <Facebook className="h-5 w-5 text-foreground hover:text-primary transition-colors" />
-              </Link>
-              <Link
-                href={socialLinks.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn Profile"
-                className="transform hover:scale-110 transition-transform duration-300"
-              >
-                <Linkedin className="h-5 w-5 text-foreground hover:text-primary transition-colors" />
-              </Link>
-            </div>
           </div>
         </div>
       </nav>
@@ -191,9 +171,16 @@ export function Navigation() {
                 setActiveSection("")
               }
             }}
-            className="text-xl font-serif font-semibold text-foreground hover:text-primary transition-colors"
+            className="flex items-center hover:opacity-80 transition-opacity"
           >
-            Eliza Marie Abing
+            <Image
+              src="/heart-logo.png"
+              alt="Eliza Abing Logo"
+              width={36}
+              height={36}
+              priority
+              className="h-20 w-20"
+            />
           </Link>
           <button
             className="p-2 text-foreground hover:text-primary transition-colors rounded-lg hover:bg-white/10"
@@ -206,7 +193,7 @@ export function Navigation() {
 
         {mobileMenuOpen && (
           <div className="py-4 px-6 border-t border-white/20 bg-white/5 backdrop-blur-xl">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 items-center">
               {navItems.map((item) => {
                 const active = isActive(item)
                 return (
@@ -215,7 +202,7 @@ export function Navigation() {
                     href={item.href}
                     onClick={() => handleLinkClick(item.href, item.anchor)}
                     className={cn(
-                      "text-sm font-medium transition-colors hover:text-primary py-2 px-4 rounded-lg hover:bg-white/10",
+                      "text-base font-medium transition-colors hover:text-primary py-2 px-4 rounded-lg hover:bg-white/10 text-center",
                       active ? "text-primary bg-white/10" : "text-foreground"
                     )}
                   >
