@@ -17,7 +17,6 @@ const navItems = [
   { href: "/", label: "Home", anchor: "" },
   { href: "/#about", label: "About", anchor: "about" },
   { href: "/#projects", label: "Projects", anchor: "projects" },
-  { href: "/#journal", label: "Journal", anchor: "journal" },
   { href: "/#certificates", label: "Certificates", anchor: "certificates" },
   { href: "/#contact", label: "Contact", anchor: "contact" },
 ]
@@ -27,10 +26,20 @@ export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState<string>("")
 
+  // NEW: Force scroll to top on hard refresh/initial load
+  useEffect(() => {
+    // This removes the hash from the URL and scrolls to the top 
+    // immediately when the component mounts for the first time
+    if (window.location.hash) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
   // Handle scroll to detect active section
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["about", "projects", "journal", "certificates", "contact"]
+      const sections = ["about", "projects", "certificates", "contact"]
       const scrollPosition = window.scrollY + 100
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -43,7 +52,7 @@ export function Navigation() {
       setActiveSection("")
     }
 
-    // Handle hash changes
+    // Handle hash changes (only when clicking nav items, not on refresh)
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1)
       if (hash) {
@@ -61,9 +70,8 @@ export function Navigation() {
 
     window.addEventListener("scroll", handleScroll)
     window.addEventListener("hashchange", handleHashChange)
-    handleScroll() // Initial check
-    handleHashChange() // Initial hash check
-
+    handleScroll() 
+    
     return () => {
       window.removeEventListener("scroll", handleScroll)
       window.removeEventListener("hashchange", handleHashChange)
@@ -73,12 +81,16 @@ export function Navigation() {
   const handleLinkClick = (href: string, anchor?: string) => {
     setMobileMenuOpen(false)
 
+    // Force refresh if Home is clicked
+    if (href === "/" && !anchor) {
+      window.location.href = "/"
+      return
+    }
+
     if (anchor && pathname === "/") {
-      // Smooth scroll to section on homepage
       const element = document.getElementById(anchor)
       if (element) {
         element.scrollIntoView({ behavior: "smooth", block: "start" })
-        // Update URL without jumping
         window.history.pushState(null, "", `/#${anchor}`)
         setActiveSection(anchor)
       }
@@ -93,17 +105,14 @@ export function Navigation() {
 
   return (
     <>
-      {/* Desktop Navbar - Glassmorphism */}
+      {/* Desktop Navbar */}
       <nav className="hidden md:flex fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-lg h-20">
         <div className="max-w-7xl mx-auto flex items-center justify-between w-full px-8">
           <Link
             href="/"
-            onClick={() => {
-              if (pathname === "/") {
-                window.scrollTo({ top: 0, behavior: "smooth" })
-                window.history.pushState(null, "", "/")
-                setActiveSection("")
-              }
+            onClick={(e) => {
+              e.preventDefault()
+              window.location.href = "/" // Full Refresh
             }}
             className="flex items-center hover:opacity-80 transition-opacity duration-300 hover:scale-105 flex-shrink-0"
           >
@@ -125,7 +134,10 @@ export function Navigation() {
                   key={item.href}
                   href={item.href}
                   onClick={(e) => {
-                    if (item.anchor && pathname === "/") {
+                    if (item.anchor === "") {
+                      e.preventDefault()
+                      window.location.href = "/" // Full Refresh
+                    } else if (item.anchor && pathname === "/") {
                       e.preventDefault()
                       handleLinkClick(item.href, item.anchor)
                     }
@@ -159,17 +171,14 @@ export function Navigation() {
         </div>
       </nav>
 
-      {/* Mobile Navbar - Glassmorphism */}
+      {/* Mobile Navbar */}
       <nav className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-lg">
         <div className="flex items-center justify-between h-16 px-6">
           <Link
             href="/"
-            onClick={() => {
-              if (pathname === "/") {
-                window.scrollTo({ top: 0, behavior: "smooth" })
-                window.history.pushState(null, "", "/")
-                setActiveSection("")
-              }
+            onClick={(e) => {
+              e.preventDefault()
+              window.location.href = "/" // Full Refresh
             }}
             className="flex items-center hover:opacity-80 transition-opacity"
           >
@@ -200,7 +209,14 @@ export function Navigation() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={() => handleLinkClick(item.href, item.anchor)}
+                    onClick={(e) => {
+                      if (item.anchor === "") {
+                        e.preventDefault()
+                        window.location.href = "/" // Full Refresh
+                      } else {
+                        handleLinkClick(item.href, item.anchor)
+                      }
+                    }}
                     className={cn(
                       "text-base font-medium transition-colors hover:text-primary py-2 px-4 rounded-lg hover:bg-white/10 text-center",
                       active ? "text-primary bg-white/10" : "text-foreground"
