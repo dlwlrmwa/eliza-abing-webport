@@ -163,7 +163,7 @@ export function Navigation() {
             <a
               href="/eliza-abing-cv.pdf"
               download="eliza-abing-cv.pdf"
-              className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-primary to-primary/80 rounded-full hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 hover:scale-105"
+              className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-black bg-gradient-to-r from-primary to-primary/80 rounded-full hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 hover:scale-105"
             >
               Download CV
             </a>

@@ -274,9 +274,7 @@ export default function HomePage() {
                     Eliza Marie Abing
                   </span>
                 </h1>
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl">
-                  Creative professional crafting beautiful digital experiences with passion and precision.
-                </p>
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl">BSIT student at Holy Cross of Davao College, dedicated to building efficient, user-centric solutions while exploring the intersection of design and technology.</p>
                 <div className="flex flex-wrap gap-4">
                   <Button onClick={() => scrollToSection("projects")} size="lg" className="rounded-full bg-gradient-to-r from-primary to-primary/80 text-white px-8 transition-all hover:scale-105 cursor-pointer">
                     View My Work <ArrowRight className="ml-2 h-4 w-4" />
@@ -286,17 +284,46 @@ export default function HomePage() {
                   </Button>
                 </div>
               </div>
-              <div className="relative">
-                <div className="relative aspect-square max-w-lg mx-auto rounded-3xl overflow-hidden border border-white/20 shadow-2xl hover:scale-105 transition-all">
-                  <Image src="/my-portrait.jpg" alt="Eliza Marie Abing" fill className="object-cover" priority />
+
+              {/* PROFESSIONAL PHOTO SECTION */}
+              <div className={`relative flex justify-center items-center transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+
+                {/* Decorative Background Glow */}
+                <div className="absolute w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-profile-glow" />
+
+                {/* Image Container with Floating Animation */}
+                <div className="relative animate-profile-float">
+
+                  {/* The Sparkle Frame (Matches Project Card #2) */}
+                  <div className="relative p-3 bg-white/5 backdrop-blur-sm rounded-[2.5rem] border border-white/20 shadow-2xl overflow-hidden group">
+
+                    {/* Inner Image Wrapper */}
+                    <div className="relative aspect-[4/5] w-64 md:w-80 rounded-[2rem] overflow-hidden border border-white/10">
+                      <Image
+                        src="/my-portrait.jpg"
+                        alt="Eliza Marie Abing"
+                        fill
+                        className="object-cover transition-all duration-700 scale-110 group-hover:scale-100"
+                        priority
+                      />
+
+                      {/* Subtle Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
+                    </div>
+                  </div>
+
+                  {/* Floating Tag or Highlight */}
+                  <div className="absolute -bottom-4 -left-4 bg-background/80 backdrop-blur-md border border-primary/20 px-4 py-2 rounded-2xl shadow-xl">
+                    <p className="text-xs font-bold text-primary tracking-widest uppercase">Available for Work</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          
+
           {/* Floating Scroll for more Button */}
           <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-            <button 
+            <button
               onClick={() => scrollToSection("about")}
               className="group flex flex-col items-center gap-2 transition-all duration-300"
             >
@@ -312,7 +339,7 @@ export default function HomePage() {
 
         {/* About Section */}
         <section id="about" className="py-20 px-6 lg:px-8 bg-gradient-to-b from-transparent to-primary/5 scroll-mt-20">
-          <div className="max-w-6xl mx-auto w-full">
+          <div className="max-w-7xl mx-auto w-full"> {/* Increased max-width for 3 columns */}
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">About Me</h2>
               <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -320,11 +347,25 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            {/* Grid updated to 3 columns on large screens */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+              {/* Card 1: Skills */}
               <div className="p-8 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105">
                 <h3 className="text-xl font-serif font-semibold mb-6">Skills & Expertise</h3>
                 <div className="space-y-3">
-                  {["UI/UX Design", "Web Development", "Responsive Design", "Brand Identity", "Typography", "Prototyping"].map((skill) => (
+                  {[
+                    "Full-Stack Development",
+                    "Database Management",
+                    "Modern UI Systems",
+                    "API & Logic",
+                    "Version Control",
+                    "Cloud Development",
+                    "Design Implementation",
+                    "UI/UX Design",
+                    "Responsive Design",
+                    "Prototyping"
+                  ].map((skill) => (
                     <div key={skill} className="flex items-center gap-3 group">
                       <div className="w-2 h-2 rounded-full bg-primary group-hover:w-3 group-hover:h-3 transition-all duration-300" />
                       <span className="text-muted-foreground group-hover:text-primary transition-colors duration-300">
@@ -335,6 +376,7 @@ export default function HomePage() {
                 </div>
               </div>
 
+              {/* Card 2: Experience */}
               <div className="p-8 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105">
                 <h3 className="text-xl font-serif font-semibold mb-6">Experience</h3>
                 <div className="space-y-6">
@@ -348,114 +390,166 @@ export default function HomePage() {
                     <p className="text-sm text-muted-foreground mb-2">Agency Name • 2018 - 2020</p>
                     <p className="text-sm text-muted-foreground">Developed interactive web experiences.</p>
                   </div>
+                                    <div className="group">
+                    <h4 className="font-semibold mb-1 group-hover:text-primary transition-colors">Creative Developer</h4>
+                    <p className="text-sm text-muted-foreground mb-2">Agency Name • 2018 - 2020</p>
+                    <p className="text-sm text-muted-foreground">Developed interactive web experiences.</p>
+                  </div>
                 </div>
               </div>
+
+              {/* Card 3: Tech Stack Logos */}
+              <div className="p-8 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105">
+                <h3 className="text-xl font-serif font-semibold mb-6">Tech Stack</h3>
+                <div className="grid grid-cols-3 gap-6 items-center justify-items-center">
+                  {[
+                    { name: "React", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+                    { name: "Next.js", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
+                    { name: "TypeScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+                    { name: "Tailwind", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
+                    { name: "Supabase", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" },
+                    { name: "Node.js", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+                    { name: "Python", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+                    { name: "Figma", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+                    { name: "Git", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+                    { name: "GitHub", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
+                    { name: "Vercel", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" },
+                    { name: "Netlify", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/netlify/netlify-original.svg" },
+                  ].map((tech) => (
+                    <div key={tech.name} className="group relative flex flex-col items-center gap-2">
+                      <div className="w-12 h-12 p-2 bg-white/20 rounded-xl border border-white/30 group-hover:border-primary/50 group-hover:bg-white/30 transition-all duration-300">
+                        <img
+                          src={tech.src}
+                          alt={tech.name}
+                          className="w-full h-full object-contain filter transition-all duration-500"
+                        />
+                      </div>
+                      <span className="text-[10px] font-medium text-muted-foreground group-hover:text-primary transition-colors">
+                        {tech.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+        {/* Projects Grid Section */}
+        <section id="projects" className="py-20 px-6 lg:px-8 bg-gradient-to-b from-transparent to-primary/5 scroll-mt-20">
+          <div className="max-w-7xl mx-auto w-full">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">Featured Projects</h2>
+              <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">Explore my latest work and creative solutions</p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
+              {projects.map((project) => (
+                <article
+                  key={project.id}
+                  onClick={() => {
+                    if (project.id === 2) {
+                      router.push("/journal");
+                    } else {
+                      setSelectedProject(project);
+                    }
+                  }}
+                  className={`group bg-card rounded-xl border transition-all duration-500 cursor-pointer flex flex-col relative pt-1 px-1 ${project.id === 2
+                    ? "sparkle-border-container border-transparent shadow-[0_0_100px_rgba(255,105,180,0.3)]"
+                    : "border-border hover:border-primary"
+                    }`}
+                >
+                  {/* Must See Badge Overlay */}
+                  {project.id === 2 && (
+                    <div className="absolute top-5 left-5 z-30 flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary text-black/80 text-[10px] font-bold uppercase tracking-wider shadow-lg">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-black"></span>
+                      </span>
+                      Must See
+                    </div>
+                  )}
+
+                  {/* PHOTO SECTION */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedProject(project);
+                    }}
+                    // Changed rounded-t to rounded-xl so the image has rounded corners all around inside the card
+                    className="relative aspect-video overflow-hidden bg-secondary cursor-zoom-in rounded-xl"
+                  >
+                    <Image
+                      src={project.images[0].src}
+                      alt={project.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-all duration-500"
+                    />
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
+                  </div>
+
+                  {/* CONTENT SECTION */}
+                  <div className="p-5 flex-1 flex flex-col">
+                    <h3 className="text-xl font-serif font-semibold mb-2 text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
+                      {project.title}
+                      {project.id === 2 && <span className="animate-pulse"></span>}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed line-clamp-2">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4 mt-auto">
+                      {project.tags.map((tag) => (
+                        <span key={tag} className="text-[10px] px-3 py-1 bg-secondary text-secondary-foreground rounded-full font-bold uppercase">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* ACTION BUTTONS */}
+                    <div className="flex gap-3">
+                      {project.id === 2 ? (
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push("/journal");
+                          }}
+                          size="sm"
+                          className="rounded-full flex-1 bg-primary hover:bg-primary/90 text-black/85 shadow-md transition-all active:scale-95 cursor-pointer"
+                        >
+                          View My Journal
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      ) : (
+                        <>
+                          <Button
+                            onClick={(e) => e.stopPropagation()}
+                            size="sm" variant="outline" className="rounded-full flex-1"
+                          >
+                            <Github className="mr-2 h-4 w-4" />Code
+                          </Button>
+                          <Button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedProject(project);
+                            }}
+                            size="sm" className="rounded-full flex-1 bg-primary hover:bg-primary/90"
+                          >
+                            <ExternalLink className="mr-2 h-4 w-4" /> Demo
+
+                          </Button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>
 
-{/* Projects Grid Section */}
-<section id="projects" className="py-20 px-6 lg:px-8 bg-gradient-to-b from-transparent to-primary/5 scroll-mt-20">
-  <div className="max-w-7xl mx-auto w-full">
-    <div className="text-center mb-16">
-      <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">Featured Projects</h2>
-      <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">Explore my latest work and creative solutions</p>
-    </div>
-    <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8">
-      {projects.map((project) => (
-        <article 
-          key={project.id} 
-          // Clicking the whole card (except the photo/buttons) triggers actions
-          onClick={() => {
-            if (project.id === 2) {
-              router.push("/journal");
-            } else {
-              setSelectedProject(project); // Show photos for other projects
-            }
-          }}
-          className="group bg-card rounded-2xl border border-border overflow-hidden hover:border-primary transition-all hover:shadow-lg cursor-pointer flex flex-col"
-        >
-          {/* PHOTO SECTION - Explicitly opens the Gallery */}
-          <div 
-            onClick={(e) => {
-              e.stopPropagation(); // Prevents double-triggering the card's onClick
-              setSelectedProject(project);
-            }} 
-            className="relative aspect-video overflow-hidden bg-secondary cursor-zoom-in"
-          >
-            <Image 
-              src={project.images[0].src} 
-              alt={project.title} 
-              fill 
-              className="object-cover group-hover:scale-105 transition-all duration-300" 
-            />
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
-          </div>
-
-          {/* CONTENT SECTION */}
-          <div className="p-6 flex-1 flex flex-col">
-            <h3 className="text-xl font-serif font-semibold mb-2 text-foreground group-hover:text-primary transition-colors">
-              {project.title}
-            </h3>
-            <p className="text-sm text-muted-foreground mb-4 leading-relaxed line-clamp-2">
-              {project.description}
-            </p>
-            <div className="flex flex-wrap gap-2 mb-4 mt-auto">
-              {project.tags.map((tag) => (
-                <span key={tag} className="text-xs px-3 py-1 bg-secondary text-secondary-foreground rounded-full">
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            {/* ACTION BUTTONS */}
-            <div className="flex gap-3">
-              {project.id === 2 ? (
-                <Button
-                  onClick={(e) => {
-                    e.stopPropagation(); // Stop from firing card's onClick
-                    router.push("/journal");
-                  }}
-                  size="sm"
-                  className="rounded-full flex-1 bg-primary hover:bg-primary/90 text-black font-medium shadow-md transition-all active:scale-90 cursor-pointer"
-                >
-                  Click for more
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              ) : (
-                <>
-                  <Button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      // Link to Github or leave as is
-                    }} 
-                    size="sm" variant="outline" className="rounded-full flex-1 bg-transparent"
-                  >
-                    <Github className="mr-2 h-4 w-4" /> Code
-                  </Button>
-                  <Button 
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent card double-trigger
-                      setSelectedProject(project); // Show photos
-                    }} 
-                    size="sm" className="rounded-full flex-1 bg-primary hover:bg-primary/90 cursor-pointer"
-                  >
-                    <ExternalLink className="mr-2 h-4 w-4" /> Demo
-                  </Button>
-                </>
-              )}
-            </div>
-          </div>
-        </article>
-      ))}
-    </div>
-  </div>
-</section>
-
         {/* Certificates Section */}
         <section id="certificates" className="py-20 px-6 lg:px-8 scroll-mt-20">
           <div className="max-w-7xl mx-auto w-full">
-            <div className="text-center mb-16">
+            <div className="text-center mb-10">
               <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">Certificates</h2>
               <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
                 Professional achievements and training
@@ -489,10 +583,6 @@ export default function HomePage() {
                       </div>
                       <div className="relative aspect-video rounded-xl overflow-hidden bg-secondary">
                         <Image src={cert.image} alt={cert.title} fill className="object-contain" />
-                      </div>
-                      <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary font-medium rounded-full group-hover:bg-primary group-hover:text-white transition-all">
-                        <span>Click to view certificate</span>
-                        <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                       </div>
                     </article>
                   </DialogTrigger>

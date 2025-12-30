@@ -5,6 +5,63 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@keyframes sparkle-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.sparkle-border-container {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.sparkle-border-container::before {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  left: -50%;
+  top: -50%;
+  width: 200%;
+  height: 200%;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 50% 50%, 50% 50%;
+  background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+  /* Sparkle colors: Primary and White for a glitter effect */
+  background-image: conic-gradient(from 0deg, transparent 5%, #ee7bd1 30%, transparent 40%, #ffffff 50%, transparent 10%);
+  animation: sparkle-rotate 3.5s linear infinite;
+}
+
+.sparkle-border-container::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 3px; /* Border thickness */
+  top: 2px;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  background: inherit;
+  border-radius: inherit;
+}
+
+@keyframes profile-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes profile-glow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+.animate-profile-float {
+  animation: profile-float 5s ease-in-out infinite;
+}
+
+.animate-profile-glow {
+  animation: profile-glow 4s ease-in-out infinite;
+}
 
 :root {
   /* Updated to use pastel pink color palette */
