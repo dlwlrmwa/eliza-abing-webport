@@ -134,7 +134,7 @@ const certificates = [
     description:
       "My certificate of completion of the Javascript Tutorial",
     image: "/certs/javascript-cert.png",
-    date: "2025-11-22",
+    date: "2023-12-04",
   },
   {
     id: 2,

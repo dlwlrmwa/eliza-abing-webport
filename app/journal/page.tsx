@@ -66,7 +66,7 @@ const journalPosts = [
 
 const certificates = [
   { id: 1, title: "Certificate of Completion", issuer: "WATT - World of Adventures Travel and Tours", description: "My active participation and completion of the Educational Tour in Cebu and Bohol last November 19-22, 2025.", image: "/certs/eli-watt-certificate.png", date: "2025-11-22" },
-  { id: 2, title: "Provincial Disaster Risk Reduction and Management Office", issuer: "Provincial DRRM Office", description: "My Certificate of Appearance at the Provincial Disaster Risk Reduction and Management Office in Tagbilaran City, Bohol.", image: "/certs/tarsier-cert.jpg", date: "2025-11-22" }
+  { id: 2, title: "Certificate of Appearance", issuer: "Provincial DRRM Office", description: "My Certificate of Appearance at the Provincial Disaster Risk Reduction and Management Office in Tagbilaran City, Bohol.", image: "/certs/tarsier-cert.jpg", date: "2025-11-22" }
 ]
 
 function formatDateRange(startDate: string, endDate?: string) {
