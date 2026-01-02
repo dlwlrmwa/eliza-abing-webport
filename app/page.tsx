@@ -66,6 +66,36 @@ const projects = [
   },
   {
     id: 3,
+    title: "Website Portfolio",
+    description:
+      "Responsive personal portfolio built from scratch with a focus on clean UI and polished UX.",
+    images: [
+      { src: "/my-portfolio.JPG", description: "#" },
+      { src: "/my-portfolio.JPG", description: "#" },
+      { src: "/my-portfolio.JPG", description: "#" },
+      { src: "/my-portfolio.JPG", description: "#" },
+    ],
+    tags: ["Next.js", "Typescript", "Tailwind"],
+    github: "#",
+    demo: "https://eliza-abing-port.vercel.app/",
+  },
+  {
+    id: 4,
+    title: "QuizWiz",
+    description:
+      "An interactive quiz application assessment tool featuring dynamic question handling and instant feedback.",
+    images: [
+      { src: "/quizwiz.JPG", description: "Quiz creation interface with multiple question types" },
+      { src: "/quizwiz.JPG", description: "Interactive quiz taking experience" },
+      { src: "/quizwiz.JPG", description: "Real-time results and analytics dashboard" },
+      { src: "/quizwiz.JPG", description: "Score tracking and performance insights" },
+    ],
+    tags: ["React", "API Integration", "Charts"],
+    github: "#",
+    demo: "#",
+  },
+  {
+    id: 5,
     title: "TaskMate Task Management Dashboard",
     description:
       "A collaborative task management tool with real-time updates and team features.",
@@ -76,36 +106,6 @@ const projects = [
       { src: "/taskmate.jpg", description: "Notifications and activity feed" },
     ],
     tags: ["Next.js", "Supabase", "Tailwind"],
-    github: "#",
-    demo: "#",
-  },
-  {
-    id: 4,
-    title: "QuizWiz",
-    description:
-      "An interactive quiz application assessment tool featuring dynamic question handling and instant feedback.",
-    images: [
-      { src: "/quizwiz.jpg", description: "Quiz creation interface with multiple question types" },
-      { src: "/quizwiz.jpg", description: "Interactive quiz taking experience" },
-      { src: "/quizwiz.jpg", description: "Real-time results and analytics dashboard" },
-      { src: "/quizwiz.jpg", description: "Score tracking and performance insights" },
-    ],
-    tags: ["React", "API Integration", "Charts"],
-    github: "#",
-    demo: "#",
-  },
-  {
-    id: 5,
-    title: "Website Portfolio",
-    description:
-      "Personal portfolio built from scratch with a focus on clean UI and polished UX.",
-    images: [
-      { src: "/my-portfolio.JPG", description: "#" },
-      { src: "/my-portfolio.JPG", description: "#" },
-      { src: "/my-portfolio.JPG", description: "#" },
-      { src: "/my-portfolio.JPG", description: "#" },
-    ],
-    tags: ["Next.js", "Typescript", "Tailwind"],
     github: "#",
     demo: "#",
   },

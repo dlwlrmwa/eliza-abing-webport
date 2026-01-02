@@ -127,7 +127,7 @@ export default function JournalPage() {
                               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
                             </div>
                             <div className="p-5 bg-white/40 text-center">
-                              <h5 className="font-serif font-semibold text-lg text-foreground/90">Day {day} Highlights</h5>
+                              <h5 className="font-serif font-semibold text-lg text-foreground/90">Day {day}</h5>
                             </div>
                           </div>
                         )
@@ -225,6 +225,7 @@ export default function JournalPage() {
           <DialogContent className="max-w-[85vw] sm:max-w-[80vw] h-[95vh] bg-background/95 backdrop-blur-2xl border-primary/20 p-0 flex flex-col overflow-hidden">
             <DialogHeader className="p-6 shrink-0 flex flex-col items-center justify-center bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 border-b border-primary/10">
               <DialogTitle className="text-4xl font-serif">Day {selectedDay} Photo Collection</DialogTitle>
+              <p className="text-muted-foreground text-center mt-2">Press Esc or click outside the dialog to close the gallery view. </p>
             </DialogHeader>
 
             <div className="flex-1 overflow-y-auto p-6 sm:p-10 scrollbar-hide">
@@ -248,8 +249,8 @@ export default function JournalPage() {
                   ))
                 })}
               </div>
-              <p className="text-black/60 text-xs text-center font-serif py-4 italic">
-                "Some images displayed belong to their respective owners. Credits given where available." - Eliza, 2025
+              <p className="text-black/90 text-lg text-center font-serif py-1 italic">
+                "Some images displayed belong to their respective owners. Credits given where available." - Eliza Gwapa, 2025
               </p>
             </div>
           </DialogContent>
@@ -282,7 +283,6 @@ export default function JournalPage() {
             <DialogContent className="max-w-[95vw] sm:max-w-4xl h-[88vh] bg-transparent border-0 shadow-none flex items-center justify-center p-0">
               <DialogTitle className="sr-only">{selectedReflection.title}</DialogTitle>
               <div className="relative w-full h-full flex flex-col items-center animate-in zoom-in duration-300">
-                <button onClick={() => setSelectedReflection(null)} className="absolute top-4 right-4 p-2 bg-black/40 text-white rounded-full z-50"><X className="h-5 w-5" /></button>
                 <Image src={selectedReflection.image} alt={selectedReflection.title} fill className="object-contain" />
               </div>
             </DialogContent>
