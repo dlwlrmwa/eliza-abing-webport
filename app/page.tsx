@@ -40,10 +40,10 @@ const projects = [
     description:
       "A modern e-commerce solution with seamless checkout and inventory management.",
     images: [
-      { src: "/amari-pos/amari1.gif", description: "Main dashboard with real-time inventory overview" },
-      { src: "/amari-pos/amari2.png", description: "Point of sale interface with product selection" },
-      { src: "/amari-pos/amari3.png", description: "Inventory management and stock tracking system" },
-      { src: "/amari-pos/amari4.png", description: "Sales analytics and reporting dashboard" },
+      { src: "/1project/amari1.gif", description: "Main dashboard with real-time inventory overview" },
+      { src: "/1project/amari2.png", description: "Point of sale interface with product selection" },
+      { src: "/1project/amari3.png", description: "Inventory management and stock tracking system" },
+      { src: "/1project/amari4.png", description: "Sales analytics and reporting dashboard" },
     ],
     tags: ["Next.js", "TypeScript", "Supabase"],
     github: "#",
@@ -55,7 +55,7 @@ const projects = [
     description:
       "Exploring local heritage, industry practices, and natural wonders through a 4-day academic journey.",
     images: [
-      { src: "/gallery/9.jpg", description: "Exploring the historic Magellan's Cross in Cebu" },
+      { src: "/Day3/D3-mata1.jpg", description: "Exploring the historic Magellan's Cross in Cebu" },
       { src: "/gallery/4.jpg", description: "Visiting the Chocolate Hills in Bohol" },
       { src: "/gallery/12.jpg", description: "Learning about sustainable tourism practices" },
       { src: "/gallery/15.jpg", description: "Group photo at the Loboc River Cruise" },
@@ -66,14 +66,14 @@ const projects = [
   },
   {
     id: 3,
-    title: "PointPro Task Management Dashboard",
+    title: "TaskMate Task Management Dashboard",
     description:
       "A collaborative task management tool with real-time updates and team features.",
     images: [
-      { src: "/task-management-dashboard.png", description: "Task board with drag-and-drop functionality" },
-      { src: "/task-management-dashboard.png", description: "Team collaboration and assignment features" },
-      { src: "/task-management-dashboard.png", description: "Project timeline and progress tracking" },
-      { src: "/task-management-dashboard.png", description: "Notifications and activity feed" },
+      { src: "/taskmate.jpg", description: "Task board with drag-and-drop functionality" },
+      { src: "/taskmate.jpg", description: "Team collaboration and assignment features" },
+      { src: "/taskmate.jpg", description: "Project timeline and progress tracking" },
+      { src: "/taskmate.jpg", description: "Notifications and activity feed" },
     ],
     tags: ["Next.js", "Supabase", "Tailwind"],
     github: "#",
@@ -81,14 +81,14 @@ const projects = [
   },
   {
     id: 4,
-    title: "Quiz Application",
+    title: "QuizWiz",
     description:
-      "An interactive assessment tool featuring dynamic question handling and instant feedback.",
+      "An interactive quiz application assessment tool featuring dynamic question handling and instant feedback.",
     images: [
-      { src: "/weather-app-interface.png", description: "Quiz creation interface with multiple question types" },
-      { src: "/weather-app-interface.png", description: "Interactive quiz taking experience" },
-      { src: "/weather-app-interface.png", description: "Real-time results and analytics dashboard" },
-      { src: "/weather-app-interface.png", description: "Score tracking and performance insights" },
+      { src: "/quizwiz.jpg", description: "Quiz creation interface with multiple question types" },
+      { src: "/quizwiz.jpg", description: "Interactive quiz taking experience" },
+      { src: "/quizwiz.jpg", description: "Real-time results and analytics dashboard" },
+      { src: "/quizwiz.jpg", description: "Score tracking and performance insights" },
     ],
     tags: ["React", "API Integration", "Charts"],
     github: "#",
@@ -96,16 +96,16 @@ const projects = [
   },
   {
     id: 5,
-    title: "CheckMate",
+    title: "Website Portfolio",
     description:
-      "Content management system with markdown support and SEO optimization.",
+      "Personal portfolio built from scratch with a focus on clean UI and polished UX.",
     images: [
-      { src: "/blog-platform-interface.jpg", description: "Content editor with markdown support" },
-      { src: "/blog-platform-interface.jpg", description: "SEO optimization tools and preview" },
-      { src: "/blog-platform-interface.jpg", description: "Content library and organization" },
-      { src: "/blog-platform-interface.jpg", description: "Publishing workflow and scheduling" },
+      { src: "/my-portfolio.JPG", description: "#" },
+      { src: "/my-portfolio.JPG", description: "#" },
+      { src: "/my-portfolio.JPG", description: "#" },
+      { src: "/my-portfolio.JPG", description: "#" },
     ],
-    tags: ["Next.js", "MDX", "CMS"],
+    tags: ["Next.js", "Typescript", "Tailwind"],
     github: "#",
     demo: "#",
   },
@@ -120,7 +120,7 @@ const projects = [
       { src: "/chrome-locker.png", description: "Tab protection and unlock mechanism" },
       { src: "/chrome-locker.png", description: "Privacy dashboard and activity log" },
     ],
-    tags: ["React", "Extension", "Security"],
+    tags: ["HTML", "CSS", "Javascript", "JSON"],
     github: "#",
     demo: "#",
   },
@@ -130,10 +130,10 @@ const certificates = [
   {
     id: 1,
     title: "Certificate of Completion",
-    issuer: "WATT - World of Adventures Travel and Tours",
+    issuer: "Learnovers",
     description:
-      "My active participation and completion of the Educational Tour in Cebu and Bohol last November 19-22, 2025.",
-    image: "/certs/eli-watt-certificate.png",
+      "My certificate of completion of the Javascript Tutorial",
+    image: "/certs/javascript-cert.png",
     date: "2025-11-22",
   },
   {
@@ -381,19 +381,19 @@ export default function HomePage() {
                 <h3 className="text-xl font-serif font-semibold mb-6">Experience</h3>
                 <div className="space-y-6">
                   <div className="group">
-                    <h4 className="font-semibold mb-1 group-hover:text-primary transition-colors">Senior Designer</h4>
-                    <p className="text-sm text-muted-foreground mb-2">Company Name • 2020 - Present</p>
-                    <p className="text-sm text-muted-foreground">Leading design initiatives and creating user-centered solutions.</p>
+                    <h4 className="font-semibold mb-1 group-hover:text-primary transition-colors">Student Assistant</h4>
+                    <p className="text-sm text-muted-foreground mb-2">Holy Cross of Davao College • 2023 - Present</p>
+                    <p className="text-sm text-muted-foreground">Provides essential administrative, technical, or clerical support to a College of Engineering and Technology department while balancing academic responsibilities.</p>
                   </div>
                   <div className="group">
                     <h4 className="font-semibold mb-1 group-hover:text-primary transition-colors">Creative Developer</h4>
-                    <p className="text-sm text-muted-foreground mb-2">Agency Name • 2018 - 2020</p>
+                    <p className="text-sm text-muted-foreground mb-2"> 2023 - Present</p>
                     <p className="text-sm text-muted-foreground">Developed interactive web experiences.</p>
                   </div>
                                     <div className="group">
-                    <h4 className="font-semibold mb-1 group-hover:text-primary transition-colors">Creative Developer</h4>
-                    <p className="text-sm text-muted-foreground mb-2">Agency Name • 2018 - 2020</p>
-                    <p className="text-sm text-muted-foreground">Developed interactive web experiences.</p>
+                    <h4 className="font-semibold mb-1 group-hover:text-primary transition-colors">Costumer Service Representative</h4>
+                    <p className="text-sm text-muted-foreground mb-2">2022 - 2023</p>
+                    <p className="text-sm text-muted-foreground">Served as the primary point of contact for clients, dedicated to resolving inquiries, providing product information, and ensuring a positive overall experience with the company.</p>
                   </div>
                 </div>
               </div>
