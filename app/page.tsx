@@ -275,14 +275,55 @@ export default function HomePage() {
                   </span>
                 </h1>
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl">BSIT student at Holy Cross of Davao College, dedicated to building efficient, user-centric solutions while exploring the intersection of design and technology.</p>
-                <div className="flex flex-wrap gap-4">
-                  <Button onClick={() => scrollToSection("projects")} size="lg" className="rounded-full bg-gradient-to-r from-primary to-primary/80 text-white px-8 transition-all hover:scale-105 cursor-pointer">
-                    View My Work <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                  <Button onClick={() => scrollToSection("contact")} size="lg" variant="outline" className="rounded-full border-2 border-primary/30 bg-white/10 px-8 transition-all hover:scale-105 cursor-pointer">
-                    Get in Touch <MessageCircle className="ml-2 h-4 w-4" />
-                  </Button>
-                </div>
+               <div className="flex flex-wrap items-center gap-4">
+  <Button
+    onClick={() => scrollToSection("projects")}
+    size="lg"
+    className="rounded-full bg-gradient-to-r from-primary to-primary/80 text-white px-8 transition-all hover:scale-105 cursor-pointer"
+  >
+    View My Work <ArrowRight className="ml-2 h-4 w-4" />
+  </Button>
+
+  <Button
+    onClick={() => scrollToSection("contact")}
+    size="lg"
+    variant="outline"
+    className="rounded-full border-2 border-primary/30 bg-white/10 px-8 transition-all hover:scale-105 cursor-pointer"
+  >
+    Get in Touch <MessageCircle className="ml-2 h-4 w-4" />
+  </Button>
+
+  {/* Social Icons - Desktop Only (Matches Navbar Design) */}
+  <div className="hidden md:flex items-center gap-3 ml-2">
+    <a
+      href="https://github.com/dlwlrmwa"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="p-3 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 shadow-lg text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-white/20 transition-all hover:scale-110 group"
+      aria-label="GitHub"
+    >
+      <Github className="h-5 w-5 group-hover:drop-shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
+    </a>
+    <a
+      href="https://www.facebook.com/elicitaffairs"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="p-3 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 shadow-lg text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-white/20 transition-all hover:scale-110 group"
+      aria-label="Facebook"
+    >
+      <Facebook className="h-5 w-5 group-hover:drop-shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
+    </a>
+    <a
+      href="https://www.instagram.com/jieuneli/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="p-3 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 shadow-lg text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-white/20 transition-all hover:scale-110 group"
+      aria-label="LinkedIn"
+    >
+      <Linkedin className="h-5 w-5 group-hover:drop-shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
+    </a>
+  </div>
+</div>
               </div>
 
               {/* PROFESSIONAL PHOTO SECTION */}
@@ -390,7 +431,7 @@ export default function HomePage() {
                     <p className="text-sm text-muted-foreground mb-2"> 2023 - Present</p>
                     <p className="text-sm text-muted-foreground">Developed interactive web experiences.</p>
                   </div>
-                                    <div className="group">
+                  <div className="group">
                     <h4 className="font-semibold mb-1 group-hover:text-primary transition-colors">Costumer Service Representative</h4>
                     <p className="text-sm text-muted-foreground mb-2">2022 - 2023</p>
                     <p className="text-sm text-muted-foreground">Served as the primary point of contact for clients, dedicated to resolving inquiries, providing product information, and ensuring a positive overall experience with the company.</p>
@@ -633,6 +674,7 @@ export default function HomePage() {
                     <span>your.email@example.com</span>
                   </a>
                 </div>
+
               </div>
             </div>
           </div>
