@@ -19,6 +19,7 @@ import {
   FileText,
   Clock,
   MapPin,
+  Phone,
   ExternalLink,
   ChevronDown, // Added for the scroll indicator
 } from "lucide-react"
@@ -235,6 +236,7 @@ export default function HomePage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    subject: "",
     message: "",
   })
   const [selectedProject, setSelectedProject] = useState<(typeof projects)[0] | null>(null)
@@ -246,7 +248,7 @@ export default function HomePage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setFormData({ name: "", email: "", message: "" })
+    setFormData({ name: "", email: "", subject: "", message: "" })
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -275,55 +277,25 @@ export default function HomePage() {
                   </span>
                 </h1>
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl">BSIT student at Holy Cross of Davao College, dedicated to building efficient, user-centric solutions while exploring the intersection of design and technology.</p>
-               <div className="flex flex-wrap items-center gap-4">
-  <Button
-    onClick={() => scrollToSection("projects")}
-    size="lg"
-    className="rounded-full bg-gradient-to-r from-primary to-primary/80 text-white px-8 transition-all hover:scale-105 cursor-pointer"
-  >
-    View My Work <ArrowRight className="ml-2 h-4 w-4" />
-  </Button>
+                <div className="flex flex-wrap items-center gap-4">
+                  <Button
+                    onClick={() => scrollToSection("projects")}
+                    size="lg"
+                    className="rounded-full bg-gradient-to-r from-primary to-primary/80 text-white px-8 transition-all hover:scale-105 cursor-pointer"
+                  >
+                    View My Work <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
 
-  <Button
-    onClick={() => scrollToSection("contact")}
-    size="lg"
-    variant="outline"
-    className="rounded-full border-2 border-primary/30 bg-white/10 px-8 transition-all hover:scale-105 cursor-pointer"
-  >
-    Get in Touch <MessageCircle className="ml-2 h-4 w-4" />
-  </Button>
+                  <Button
+                    onClick={() => scrollToSection("contact")}
+                    size="lg"
+                    variant="outline"
+                    className="rounded-full border-2 border-primary/30 bg-white/10 px-8 transition-all hover:scale-105 cursor-pointer"
+                  >
+                    Get in Touch <MessageCircle className="ml-2 h-4 w-4" />
+                  </Button>
 
-  {/* Social Icons - Desktop Only (Matches Navbar Design) */}
-  <div className="hidden md:flex items-center gap-3 ml-2">
-    <a
-      href="https://github.com/dlwlrmwa"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="p-3 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 shadow-lg text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-white/20 transition-all hover:scale-110 group"
-      aria-label="GitHub"
-    >
-      <Github className="h-5 w-5 group-hover:drop-shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
-    </a>
-    <a
-      href="https://www.facebook.com/elicitaffairs"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="p-3 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 shadow-lg text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-white/20 transition-all hover:scale-110 group"
-      aria-label="Facebook"
-    >
-      <Facebook className="h-5 w-5 group-hover:drop-shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
-    </a>
-    <a
-      href="https://www.instagram.com/jieuneli/"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="p-3 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 shadow-lg text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-white/20 transition-all hover:scale-110 group"
-      aria-label="LinkedIn"
-    >
-      <Linkedin className="h-5 w-5 group-hover:drop-shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
-    </a>
-  </div>
-</div>
+                </div>
               </div>
 
               {/* PROFESSIONAL PHOTO SECTION */}
@@ -640,26 +612,32 @@ export default function HomePage() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="py-20 px-6 lg:px-8 relative overflow-hidden bg-gradient-to-b from-transparent to-primary/5 scroll-mt-20">
+        <section id="contact" className="py-20 px-6 lg:px-8 relative overflow-hidden bg-gradient-to-b from-transparent to-primary/5 scroll-mt-15">
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="mb-16 text-center">
               <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">Get in Touch</h2>
-              <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">Let's create something amazing together</p>
+              <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">Let's create something impactful together.</p>
             </div>
             <div className="grid md:grid-cols-2 gap-12">
-              <div className="p-8 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-xl">
+              <div className="group relative p-8 bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 hover:border-primary shadow-lg hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:scale-105 cursor-pointer">
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-2">Name</label>
-                    <Input id="name" name="name" type="text" required value={formData.name} onChange={handleChange} className="rounded-xl bg-white/50 border-white/30 focus:border-primary" placeholder="Your name" />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium mb-2">Full Name</label>
+                      <Input id="name" name="name" type="text" required value={formData.name} onChange={handleChange} className="rounded-xl bg-white/50 border-white/30 focus:border-primary" placeholder="Jane Smith" />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>
+                      <Input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} className="rounded-xl bg-white/50 border-white/30 focus:border-primary" placeholder="jane.smith@example.com" />
+                    </div>
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>
-                    <Input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} className="rounded-xl bg-white/50 border-white/30 focus:border-primary" placeholder="your.email@example.com" />
+                    <label htmlFor="subject" className="block text-sm font-medium mb-2">Subject</label>
+                    <Input id="subject" name="subject" type="text" value={formData.subject} onChange={handleChange} className="rounded-xl bg-white/50 border-white/30 focus:border-primary" placeholder="Career opportunity" />
                   </div>
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium mb-2">Message</label>
-                    <Textarea id="message" name="message" required value={formData.message} onChange={handleChange} className="rounded-xl min-h-[150px] bg-white/50 border-white/30 focus:border-primary" placeholder="Tell me about your project..." />
+                    <Textarea id="message" name="message" required value={formData.message} onChange={handleChange} className="rounded-xl min-h-[150px] bg-white/50 border-white/30 focus:border-primary" placeholder="How can I help you?" />
                   </div>
                   <Button type="submit" size="lg" className="w-full rounded-full bg-gradient-to-r from-primary to-primary/80 transition-all hover:scale-105">
                     <Send className="mr-2 h-4 w-4" /> Send Message
@@ -667,14 +645,68 @@ export default function HomePage() {
                 </form>
               </div>
               <div className="space-y-6">
-                <div className="p-8 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-xl">
+                {/* Removed 'group' from this main div so it doesn't trigger children automatically */}
+                <div className="relative p-8 bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 hover:border-primary shadow-lg hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:scale-[1.02] cursor-default">
                   <h3 className="text-xl font-serif font-semibold mb-6">Connect With Me</h3>
-                  <a href="mailto:your.email@example.com" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-all group">
-                    <div className="p-3 bg-white/20 rounded-full group-hover:bg-primary/20 transition-all"><Mail className="h-5 w-5" /></div>
-                    <span>your.email@example.com</span>
-                  </a>
-                </div>
 
+                  <div className="space-y-4">
+                    {/* Email - Individual Group */}
+                    <a href="mailto:abing.eliza@gmail.com" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-all group/email">
+                      <div className="p-3 bg-white/20 rounded-full group-hover/email:bg-primary/20 transition-all">
+                        <Mail className="h-5 w-5" />
+                      </div>
+                      <span>abing.eliza@gmail.com</span>
+                    </a>
+
+                    {/* Location - Static or Individual Group */}
+                    <div className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-all group/loc">
+                      <div className="p-3 bg-white/20 rounded-full group-hover/loc:bg-primary/20 transition-all">
+                        <MapPin className="h-5 w-5" />
+                      </div>
+                      <span>Davao City, Philippines</span>
+                    </div>
+
+                    {/* Phone - Individual Group */}
+                    <a href="tel:+639150532919" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-all group/phone">
+                      <div className="p-3 bg-white/20 rounded-full group-hover/phone:bg-primary/20 transition-all">
+                        <Phone className="h-5 w-5" />
+                      </div>
+                      <span>+63 915 053 2919</span>
+                    </a>
+
+                    <div className="flex items-center gap-6 mt-6">
+                      {/* LinkedIn - Brighter Blue background on hover */}
+                      <a
+                        href="https://linkedin.com/in/your-profile"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-3 bg-white/10 text-primary rounded-full hover:bg-[#0077B5] hover:text-white transition-all duration-100 shadow-lg hover:shadow-[#0077B5]/40"
+                      >
+                        <Linkedin className="h-6 w-6" />
+                      </a>
+
+                      {/* GitHub - Solid white on hover */}
+                      <a
+                        href="https://github.com/dlwlrmwa"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-3 bg-white/10 text-primary rounded-full hover:bg-black/80 hover:text-white transition-all duration-100 shadow-lg hover:shadow-white/20"
+                      >
+                        <Github className="h-6 w-6" />
+                      </a>
+
+                      {/* Facebook - Brighter Blue background on hover */}
+                      <a
+                        href="https://facebook.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-3 bg-white/10 text-primary rounded-full hover:bg-[#1877F2] hover:text-white transition-all duration-100 shadow-lg hover:shadow-[#1877F2]/40"
+                      >
+                        <Facebook className="h-6 w-6" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
