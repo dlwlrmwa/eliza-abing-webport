@@ -21,6 +21,7 @@ import {
   MapPin,
   Phone,
   ExternalLink,
+  ChevronUp,
   ChevronDown, // Added for the scroll indicator
 } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
@@ -41,13 +42,13 @@ const projects = [
     description:
       "A modern e-commerce solution with seamless checkout and inventory management.",
     images: [
-      { src: "/1project/amari1.gif", description: "Main dashboard with real-time inventory overview" },
+      { src: "/1project/amari1.png", description: "Main dashboard with real-time inventory overview" },
       { src: "/1project/amari2.png", description: "Point of sale interface with product selection" },
       { src: "/1project/amari3.png", description: "Inventory management and stock tracking system" },
       { src: "/1project/amari4.png", description: "Sales analytics and reporting dashboard" },
     ],
     tags: ["Next.js", "TypeScript", "Supabase"],
-    github: "#",
+    github: "https://github.com/dlwlrmwa/Amari-POS-and-Inventory-Management-System",
     demo: "#",
   },
   {
@@ -71,13 +72,10 @@ const projects = [
     description:
       "Responsive personal portfolio built from scratch with a focus on clean UI and polished UX.",
     images: [
-      { src: "/my-portfolio.JPG", description: "#" },
-      { src: "/my-portfolio.JPG", description: "#" },
-      { src: "/my-portfolio.JPG", description: "#" },
-      { src: "/my-portfolio.JPG", description: "#" },
+      { src: "/webport.png", description: "#" },
     ],
     tags: ["Next.js", "Typescript", "Tailwind"],
-    github: "#",
+    github: "https://github.com/dlwlrmwa/eliza-abing-webport",
     demo: "https://eliza-abing-port.vercel.app/",
   },
   {
@@ -87,27 +85,21 @@ const projects = [
       "An interactive quiz application assessment tool featuring dynamic question handling and instant feedback.",
     images: [
       { src: "/quizwiz.JPG", description: "Quiz creation interface with multiple question types" },
-      { src: "/quizwiz.JPG", description: "Interactive quiz taking experience" },
-      { src: "/quizwiz.JPG", description: "Real-time results and analytics dashboard" },
-      { src: "/quizwiz.JPG", description: "Score tracking and performance insights" },
     ],
     tags: ["React", "API Integration", "Charts"],
-    github: "#",
+    github: "https://github.com/dlwlrmwa/QuizWiz",
     demo: "#",
   },
   {
     id: 5,
-    title: "TaskMate Task Management Dashboard",
+    title: "TaskMate",
     description:
       "A collaborative task management tool with real-time updates and team features.",
     images: [
       { src: "/taskmate.jpg", description: "Task board with drag-and-drop functionality" },
-      { src: "/taskmate.jpg", description: "Team collaboration and assignment features" },
-      { src: "/taskmate.jpg", description: "Project timeline and progress tracking" },
-      { src: "/taskmate.jpg", description: "Notifications and activity feed" },
     ],
     tags: ["Next.js", "Supabase", "Tailwind"],
-    github: "#",
+    github: "https://github.com/dlwlrmwa/TaskMate",
     demo: "#",
   },
   {
@@ -122,7 +114,7 @@ const projects = [
       { src: "/chrome-locker.png", description: "Privacy dashboard and activity log" },
     ],
     tags: ["HTML", "CSS", "Javascript", "JSON"],
-    github: "#",
+    github: "https://github.com/jieuneli/Chrome-Locker-Extension",
     demo: "#",
   },
 ]
@@ -241,9 +233,19 @@ export default function HomePage() {
   })
   const [selectedProject, setSelectedProject] = useState<(typeof projects)[0] | null>(null)
   const [isVisible, setIsVisible] = useState(false)
+  const [showBackToTop, setShowBackToTop] = useState(false)
 
   useEffect(() => {
     setIsVisible(true)
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    const el = document.getElementById("contact")
+    if (!el) return
+    const io = new IntersectionObserver(([entry]) => setShowBackToTop(entry.isIntersecting), { threshold: 0.35 })
+    io.observe(el)
+    return () => io.disconnect()
   }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -271,8 +273,10 @@ export default function HomePage() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className={`space-y-8 transition-opacity duration-1000 ${isVisible ? "opacity-100" : "opacity-0"}`}>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground leading-tight">
-                  Hi, I'm{" "}
-                  <span className="block bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                  <span className={`block transition-transform duration-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'}`}>
+                    Hi, I'm
+                  </span>
+                  <span className={`block bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent transition-transform duration-700 delay-200 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'}`}>
                     Eliza Marie Abing
                   </span>
                 </h1>
@@ -335,7 +339,7 @@ export default function HomePage() {
           </div>
 
           {/* Floating Scroll for more Button */}
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+          <div className="hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 animate-bounce">
             <button
               onClick={() => scrollToSection("about")}
               className="group flex flex-col items-center gap-2 transition-all duration-300"
@@ -534,17 +538,28 @@ export default function HomePage() {
                       ) : (
                         <>
                           <Button
-                            onClick={(e) => e.stopPropagation()}
-                            size="sm" variant="outline" className="rounded-full flex-1"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const url = project.github;
+                              if (url && url !== "#") window.open(url, "_blank", "noopener,noreferrer");
+                            }}
+                            disabled={!(project.github && project.github !== "#")}
+                            size="sm" variant="outline" className={`rounded-full flex-1 ${!(project.github && project.github !== "#") ? 'opacity-60 cursor-not-allowed' : ''}`}
                           >
                             <Github className="mr-2 h-4 w-4" />Code
                           </Button>
                           <Button
                             onClick={(e) => {
                               e.stopPropagation();
-                              setSelectedProject(project);
+                              const demo = project.demo;
+                              if (demo && demo !== "#") {
+                                // open external demo link
+                                window.open(demo, "_blank", "noopener,noreferrer");
+                              } else {
+                                setSelectedProject(project);
+                              }
                             }}
-                            size="sm" className="rounded-full flex-1 bg-primary hover:bg-primary/90"
+                            size="sm" className="rounded-full flex-1 bg-primary hover:bg-primary/90 cursor-pointer"
                           >
                             <ExternalLink className="mr-2 h-4 w-4" /> Demo
 
@@ -720,7 +735,20 @@ export default function HomePage() {
         </footer>
       </main>
 
-      {/* Floating Contact Button */}
+      {/* Floating Back to Top & Contact Buttons */}
+      {showBackToTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed z-50 p-3 bg-primary/90 text-white rounded-full shadow-lg hover:bg-white/20 transition-all
+          /* Mobile Positioning: Top Center */
+          top-20 right-4 -translate-x-1/2
+          /* Desktop Positioning (md breakpoint): Reset mobile styles and apply bottom right */
+          md:top-auto md:left-auto md:translate-x-0 md:bottom-50 md:right-50"
+          aria-label="Back to top"
+        >
+          <ChevronUp className="h-6 w-6" />
+        </button>
+      )}
       <button onClick={() => scrollToSection("contact")} className="fixed bottom-8 right-8 z-50 p-4 bg-gradient-to-r from-primary to-primary/80 text-white rounded-full shadow-lg hover:scale-110 active:scale-95 animate-bounce cursor-pointer">
         <MessageCircle className="h-6 w-6" />
       </button>

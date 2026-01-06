@@ -158,9 +158,14 @@ export default function JournalPage() {
                             <div className="relative aspect-video overflow-hidden">
                               <Image src={displayImg} alt={`Day ${day}`} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
                               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
+
+                              {/* Hover overlay */}
+                              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <span className="opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 text-white bg-black/60 px-3 py-1 rounded-md text-sm">Click to view gallery</span>
+                              </div>
                             </div>
                             <div className="p-5 bg-white/40 text-center">
-                              <h5 className="font-serif font-semibold text-lg text-foreground/90">Day {day}</h5>
+                              <h5 className="text-[20px] font-bold text-lg text-foreground/90">Day {day} Gallery</h5>
                             </div>
                           </div>
                         )
@@ -282,6 +287,9 @@ export default function JournalPage() {
                       </div>
                       <div className="relative aspect-video rounded-xl overflow-hidden bg-secondary">
                         <Image src={cert.image} alt={cert.title} fill className="object-contain" />
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <span className="opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 text-white bg-black/60 px-3 py-1 rounded-md text-sm">Click to full view</span>
+                        </div>
                       </div>
                     </article>
                   </DialogTrigger>
