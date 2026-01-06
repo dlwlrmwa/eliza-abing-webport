@@ -245,14 +245,14 @@ export default function JournalPage() {
 
                   {/* Text Content Area */}
                   <div className="p-4 flex flex-col items-center text-center flex-grow bg-white/5">
-                    <h3 className="text-[13px] font-semibold text-foreground mb-2 leading-tight min-h-[32px] flex items-center justify-center">
+                    <h3 className="text-[15px] font-semibold text-foreground mb-2 leading-tight min-h-[32px] flex items-center justify-center">
                       {c.name}
                     </h3>
 
                     {/* Divider line for visual polish */}
                     <div className="w-8 h-0.5 bg-primary/30 rounded-full mb-3 group-hover:w-12 transition-all duration-500" />
 
-                    <p className="text-[11px] text-muted-foreground leading-relaxed line-clamp-4 flex-grow">
+                    <p className="text-[12px] text-muted-foreground leading-relaxed line-clamp-4 flex-grow">
                       {c.description}
                     </p>
                   </div>
