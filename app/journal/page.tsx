@@ -86,19 +86,52 @@ export default function JournalPage() {
   const [selectedDay, setSelectedDay] = useState<number | null>(null)
   const [selectedReflection, setSelectedReflection] = useState<any>(null)
 
+  const visitedCompanies = [
+    {
+      id: 1,
+      name: "WORLDTECH INFORMATION SOLUTIONS, INC.",
+      image: "/Day1/D1-worldtech.jpg",
+      description: "IT Consultancy Company and Certification Training center base in Manila, Cebu, Davao Philippines.",
+    },
+    {
+      id: 2,
+      name: "CODECHUM",
+      image: "/Day2/D2-codechum.jpg",
+      description: "Online learning platform that helps students and educators practice programming through interactive coding challenges and assessments.",
+    },
+    {
+      id: 3,
+      name: "RIVAN IT CEBU",
+      image: "/Day2/D2-rivanIT.jpg",
+      description: "IT training center in Cebu that provides practical technology and networking courses.",
+    },
+    {
+      id: 4,
+      name: "MATA TECHNOLOGIES, INC.",
+      image: "/Day3/D3-mata1.jpg",
+      description: "Cebu-based tech company that creates immersive 360° virtual reality maps and tours for real estate and tourism destinations in the Philippines.",
+    },
+    {
+      id: 5,
+      name: "TAGBILARAN 911",
+      image: "/gallery/tagbilaran911.jpg",
+      description: "The city’s emergency hotline and response system in Tagbilaran City, Bohol",
+    },
+  ]
+
   return (
     <>
       <SparkleCursor />
       <SnowflakeEffect />
-      <main className="min-h-screen pt-16 scroll-smooth bg-background">
-        <section className="py-20 px-6 lg:px-8 bg-gradient-to-b from-primary/10 to-transparent">
+      <main className="min-h-screen pt-12 scroll-smooth bg-background">
+        <section className="py-20 px-6 lg:px-8 bg-gradient-to-b from-primary/5 to-transparent">
           <div className="max-w-7xl mx-auto w-full">
             {journalPosts.map((post) => (
-              <div key={post.id} className="space-y-20">
+              <div key={post.id} className="space-y-9">
                 {/* Header */}
                 <div className="text-center">
-                  <div className="flex items-center justify-center gap-2 mb-6 flex-wrap">
-                    <div className="flex items-center gap-2 px-4 py-2 bg-white/40 backdrop-blur-md rounded-full border border-primary/20">
+                  <div className="flex items-center justify-center gap-2 mb-10 flex-wrap">
+                    <div className="flex items-center gap-3 px-4 py-2 bg-white/40 backdrop-blur-md rounded-full border border-primary/20">
                       <Calendar className="h-4 w-4 text-primary" />
                       <time className="text-sm font-medium text-foreground/80">{post.endDate ? formatDateRange(post.date, post.endDate) : formatDateRange(post.date)}</time>
                     </div>
@@ -187,11 +220,53 @@ export default function JournalPage() {
           </div>
         </section>
 
-        {/* Certificates */}
-        <section id="certificates" className="py-10 px-6 lg:px-8 bg-gradient-to-t from-primary/5 to-transparent">
+        {/* Visited Companies */}
+        <section id="visited-companies" className="py-20 px-6 lg:px-8 bg-gradient-to-t from-primary/5 to-transparent">
           <div className="max-w-7xl mx-auto w-full text-center">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-10">Educational Tour Certificates</h2>
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-12">Companies Visited</h2>
+
+            {/* Displayed in one line on large screens (grid-cols-5) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 max-w-[1400px] mx-auto items-stretch">
+              {visitedCompanies.map((c) => (
+                <article
+                  key={c.id}
+                  className="group overflow-hidden bg-card/50 backdrop-blur-md rounded-2xl border-2 border-primary/20 hover:border-primary transition-all duration-500 hover:shadow-xl hover:-translate-y-1 flex flex-col h-full shadow-sm"
+                >
+                  {/* Photo Container: Matches the Gallery Header Style */}
+                  <div className="relative aspect-video w-full overflow-hidden shrink-0">
+                    <Image
+                      src={c.image}
+                      alt={c.name}
+                      fill
+                      className="object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
+                  </div>
+
+                  {/* Text Content Area */}
+                  <div className="p-4 flex flex-col items-center text-center flex-grow bg-white/5">
+                    <h3 className="text-[13px] font-semibold text-foreground mb-2 leading-tight min-h-[32px] flex items-center justify-center">
+                      {c.name}
+                    </h3>
+
+                    {/* Divider line for visual polish */}
+                    <div className="w-8 h-0.5 bg-primary/30 rounded-full mb-3 group-hover:w-12 transition-all duration-500" />
+
+                    <p className="text-[11px] text-muted-foreground leading-relaxed line-clamp-4 flex-grow">
+                      {c.description}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Certificates */}
+        <section id="certificates" className="py-10 px-6 lg:px-8 mb-15 mt-20 from-primary/5 to-transparent">
+          <div className="max-w-7xl mx-auto w-full text-center">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-13">Educational Tour Certificates</h2>
+            <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
               {certificates.map((cert) => (
                 <Dialog key={cert.id}>
                   <DialogTrigger asChild>
