@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import Link from "next/link"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import {
   Dialog,
@@ -9,11 +10,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Calendar, ChevronLeft, ChevronRight, X, FileText } from "lucide-react"
+import { Calendar, ChevronLeft, ChevronRight, X, FileText, ArrowUp, ArrowLeft } from "lucide-react"
 import { SparkleCursor } from "@/components/sparkle-cursor"
 import { SnowflakeEffect } from "@/components/snowflake-effect"
 
-// Data structure remains intact with descriptions preserved
 const journalPosts = [
   {
     id: 1,
@@ -85,6 +85,17 @@ export default function JournalPage() {
   const [selectedPhoto, setSelectedPhoto] = useState<any>(null)
   const [selectedDay, setSelectedDay] = useState<number | null>(null)
   const [selectedReflection, setSelectedReflection] = useState<any>(null)
+  const [showBackToTop, setShowBackToTop] = useState(false)
+
+  useEffect(() => {
+    const el = document.getElementById("certificates")
+    if (!el) return
+    const observer = new IntersectionObserver(([entry]) => {
+      setShowBackToTop(entry.isIntersecting)
+    }, { root: null, threshold: 0.12 })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   const visitedCompanies = [
     {
@@ -123,9 +134,34 @@ export default function JournalPage() {
     <>
       <SparkleCursor />
       <SnowflakeEffect />
-      <main className="min-h-screen pt-12 scroll-smooth bg-background">
+
+      <main className="relative min-h-screen pt-12 scroll-smooth bg-background">
         <section className="py-20 px-6 lg:px-8 bg-gradient-to-b from-primary/5 to-transparent">
-          <div className="max-w-7xl mx-auto w-full">
+          <div className="max-w-7xl mx-auto w-full relative">
+
+            {/* Page action buttons (inside content container) */}
+            <div className="absolute top-1 left-1 sm:top-6 sm:left-1 z-50">
+              <Link href="/" aria-label="Back to Home" title="Back to Home" className="inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 backdrop-blur-md border border-primary/20 text-foreground shadow-lg hover:bg-primary hover:text-white transition-colors">
+                <ArrowLeft className="h-6 w-6" />
+                <span className="sr-only">Back to Home</span>
+              </Link>
+            </div>
+
+            {/* Floating Back to Top & Contact Buttons */}
+            {showBackToTop && (
+              <button
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className={
+                  "fixed z-50 p-3 rounded-full bg-white/90 backdrop-blur-md border border-primary/20 text-foreground shadow-lg hover:bg-primary hover:text-white transition-colors" +
+                  "md:top-auto md:left-auto md:right-60 md:bottom-160 md:translate-x-0"
+                }
+                aria-label="Back to top"
+                title="Back to Top"
+              >
+                <ArrowUp className="h-5 w-5" />
+                <span className="sr-only">Back to Top</span>
+              </button>
+            )}
             {journalPosts.map((post) => (
               <div key={post.id} className="space-y-9">
                 {/* Header */}

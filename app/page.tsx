@@ -8,7 +8,6 @@ import { Textarea } from "@/components/ui/textarea"
 import {
   ArrowRight,
   Mail,
-  MessageCircle,
   Github,
   Linkedin,
   Facebook,
@@ -23,6 +22,9 @@ import {
   ExternalLink,
   ChevronUp,
   ChevronDown, // Added for the scroll indicator
+  X,
+  MessageCircle,
+  ArrowUp,
 } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 import { SparkleCursor } from "@/components/sparkle-cursor"
@@ -223,6 +225,158 @@ function ProjectGalleryDialog({
   )
 }
 
+function ChatWidget() {
+  const [open, setOpen] = useState(false)
+  const [messages, setMessages] = useState<{ role: 'user' | 'assistant'; content: string }[]>([])
+  const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
+  const messagesRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (!messagesRef.current) return
+    messagesRef.current.scrollTop = messagesRef.current.scrollHeight
+  }, [messages, open])
+
+  // Listen for external requests to open the chat
+  useEffect(() => {
+    const handler = () => setOpen(true)
+    window.addEventListener('openPortfolioChat', handler)
+    return () => window.removeEventListener('openPortfolioChat', handler)
+  }, [])
+
+  // Fix: Unified function to handle both quick asks and form submissions
+  const handleChat = async (text: string) => {
+    if (!text || loading) return
+
+    const userMsg = { role: 'user' as const, content: text }
+    // Important: We use the current state + the new message immediately 
+    // to avoid sending an empty or stale array to the backend.
+    const updatedMessages = [...messages, userMsg]
+
+    setMessages(updatedMessages)
+    setInput('')
+    setLoading(true)
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: updatedMessages }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        // Displays the actual error from your route.ts catch block
+        setMessages((m) => [...m, { role: 'assistant' as const, content: `Error: ${data.error || 'Server error'}` }])
+        return
+      }
+
+      if (data?.reply) {
+        setMessages((m) => [...m, { role: 'assistant' as const, content: data.reply }])
+      } else {
+        setMessages((m) => [...m, { role: 'assistant' as const, content: 'Sorry, no response received.' }])
+      }
+    } catch (err) {
+      console.error('Chat error:', err)
+      setMessages((m) => [...m, { role: 'assistant' as const, content: 'Sorry, something went wrong. Please try again later.' }])
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const sendMessage = (e?: React.FormEvent) => {
+    e?.preventDefault()
+    handleChat(input.trim())
+  }
+
+  const quickAsk = (text: string) => {
+    handleChat(text)
+  }
+
+  const clearChat = () => setMessages([])
+
+  return (
+    <>
+      <div className="fixed z-50 bottom-0 left-0 right-0 sm:bottom-8 sm:right-8 sm:left-auto flex items-end justify-end p-4">
+        {open && (
+          <div className="w-full sm:w-[320px] md:w-[420px] max-h-[80vh] bg-white/5 backdrop-blur-xl rounded-t-2xl sm:rounded-3xl border border-white/20 shadow-lg overflow-hidden flex flex-col">
+            <div className="flex items-center justify-between p-3 border-b border-white/10">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full overflow-hidden relative flex-shrink-0">
+                  <Image src="/sofi-icon.png" alt="Sofi" fill className="object-cover" />
+                </div>
+                <div>
+                  <div className="text-lg font-semibold">Sofi</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button onClick={clearChat} className="text-xs text-muted-foreground hover:text-primary transition-colors px-2">New</button>
+                <button onClick={() => setOpen(false)} aria-label="Close chat" className="p-2 rounded-full hover:bg-white/10">
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+
+            <div ref={messagesRef} className="p-4 space-y-3 overflow-auto max-h-[60vh]">
+              {messages.length === 0 && (
+                <div>
+                  <div className="text-sm text-muted-foreground mb-3">Greetings!, I'm Sofi, an AI trained to answer questions about Eliza. If you are curious about her projects, skills, or anything else, just ask!</div>
+
+                  <div className="bg-white/5 rounded-lg p-2 flex flex-wrap gap-2">
+                    {[
+                      "Who is Eliza?",
+                      "Where is Eliza working right now?",
+                      "Where is Eliza located?",
+                      "Where do broken hearts go?",
+                      "What are Eliza's top skills/niche?",
+                      "What are Eliza's latest projects?",
+                      "How can I contact Eliza?",
+                    ].map((q) => (
+                      <button
+                        key={q}
+                        type="button"
+                        onClick={() => quickAsk(q)}
+                        disabled={loading}
+                        className="text-xs px-3 py-1 bg-white/5 rounded-full hover:bg-primary/50 transition"
+                      >
+                        {q}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {messages.map((m, i) => (
+                <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[80%] px-4 py-2 rounded-xl ${m.role === 'user' ? 'bg-primary text-black' : 'bg-white/5 text-muted-foreground'}`}>
+                    <div className="text-sm leading-snug">{m.content}</div>
+                  </div>
+                </div>
+              ))}
+
+              {/* Logic Fix: Added a small loading text to match original UI flow */}
+              {loading && (
+                <div className="flex justify-start">
+                  <div className="max-w-[80%] px-4 py-2 rounded-xl bg-white/5 text-muted-foreground animate-pulse">
+                    <div className="text-sm italic">Sofi is typing...</div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <form onSubmit={sendMessage} className="p-3 border-t border-white/10 flex items-center gap-2">
+              <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Type a question..." className="flex-1 rounded-full bg-white/20 border-white/20" disabled={loading} />
+              <Button type="submit" size="sm" className="rounded-full bg-primary px-4" disabled={loading}>
+                <Send className="h-4 w-4 text-white" />
+              </Button>
+            </form>
+          </div>
+        )}
+      </div>
+    </>
+  )
+}
 export default function HomePage() {
   const router = useRouter()
   const [formData, setFormData] = useState({
@@ -296,7 +450,7 @@ export default function HomePage() {
                     variant="outline"
                     className="rounded-full border-2 border-primary/30 bg-white/10 px-8 transition-all hover:scale-105 cursor-pointer"
                   >
-                    Get in Touch <MessageCircle className="ml-2 h-4 w-4" />
+                    Get in Touch <Mail className="ml-2 h-4 w-4" />
                   </Button>
 
                 </div>
@@ -720,6 +874,17 @@ export default function HomePage() {
                         <Facebook className="h-6 w-6" />
                       </a>
                     </div>
+
+                    {/* Chat CTA */}
+                    <div className="mt-6">
+                      <Button
+                        onClick={() => window.dispatchEvent(new CustomEvent('openPortfolioChat'))}
+                        size="lg"
+                        className="w-full rounded-full bg-primary text-black/85 shadow-md hover:bg-primary/90"
+                      >
+                        Chat with Sofi!<MessageCircle className="ml-2 h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -739,19 +904,22 @@ export default function HomePage() {
       {showBackToTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed z-50 p-3 bg-primary/90 text-white rounded-full shadow-lg hover:bg-white/20 transition-all
+          className="fixed z-50 p-3 rounded-full bg-white/90 backdrop-blur-md border border-primary/20 text-foreground shadow-lg hover:bg-primary hover:text-white transition-colors
           /* Mobile Positioning: Top Center */
           top-20 right-4 -translate-x-1/2
           /* Desktop Positioning (md breakpoint): Reset mobile styles and apply bottom right */
-          md:top-auto md:left-auto md:translate-x-0 md:bottom-50 md:right-50"
+          md:top-auto md:left-auto md:translate-x-0 md:bottom-160 md:right-50"
           aria-label="Back to top"
         >
-          <ChevronUp className="h-6 w-6" />
+          <ArrowUp className="h-6 w-6" />
         </button>
       )}
       <button onClick={() => scrollToSection("contact")} className="fixed bottom-8 right-8 z-50 p-4 bg-gradient-to-r from-primary to-primary/80 text-white rounded-full shadow-lg hover:scale-110 active:scale-95 animate-bounce cursor-pointer">
-        <MessageCircle className="h-6 w-6" />
+        <Mail className="h-6 w-6" />
       </button>
+
+      {/* Chat Widget */}
+      <ChatWidget />
 
       {/* Project Gallery Dialog */}
       {selectedProject && (
