@@ -24,7 +24,7 @@ const journalPosts = [
     slug: "cebu-bohol-tour",
     photos: [
       // Day 1
-      { id: 1, day: 1, company: "Philippine Airlines", title: "Departure from Davao", description: "8:45 a.m. - Estimated Time of Departure via Philippine Airlines.", location: "Davao Airport", image: ["/Day1/V1-tomboy.jpg", "/Day1/D1-airport1.jpg", "/Day1/V1-departure.jpg"] },
+      { id: 1, day: 1, company: "Philippine Airlines", title: "Departure from Davao", description: "8:45 a.m. - Estimated Time of Departure via Philippine Airlines.", location: "Davao Airport", image: ["/Day1/D1-airport1.jpg", "/Day1/V1-tomboy.jpg", "/Day1/V1-departure.jpg"] },
       { id: 2, day: 1, company: "Mactan-Cebu International Airport", title: "Arrival in Cebu", description: "Landed and met our tour guides to start our Cebu-Bohol adventure.", location: "Cebu City", image: "/Day1/V2-cebu.jpg" },
       { id: 3, day: 1, company: "Lapu-Lapu Shrine", title: "Lapu-Lapu Shrine", description: "Learned about the bravery of the Filipino hero at this historic site.", location: "Mactan, Cebu", image: "/Day1/3-D1.jpg" },
       { id: 4, day: 1, company: "Somac Korean Restaurant", title: "Lunch at SM Seaside", description: "Eat-All-You-Can buffet at Somac Korean Restaurant.", location: "SM Seaside Cebu", image: "/Day1/D1-somac.jpg" },
@@ -210,7 +210,7 @@ export default function JournalPage() {
                   </div>
 
                   {/* Reflection Carousel */}
-                  <div className="space-y-8 flex flex-col items-center">
+                  <div className="space-y-5 flex flex-col items-center relative">
                     <div className="text-center">
                       <h4 className="flex items-center gap-3 text-2xl font-serif font-semibold text-foreground"><span className="w-1 h-8 bg-primary rounded-full" />Reflection Paper</h4>
                     </div>
@@ -242,17 +242,18 @@ export default function JournalPage() {
                               <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white/20 shadow-2xl hover:shadow-primary/50 transition-all hover:border-primary group">
                                 <Image src={page.image} alt={page.title} fill className="object-cover" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                                  <p className="text-sm font-semibold">{page.title}</p>
-                                  <p className="text-xs text-white/70">Page {page.pageNumber}</p>
+                                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">                                  <p className="text-xs text-white/70">Page {page.pageNumber}</p>
                                 </div>
                               </div>
                             </div>
                           );
                         })}
                       </div>
-                      <button onClick={() => setJournalReflectionIndex((prev) => (prev === 0 ? post.reflectionPages.length - 1 : prev - 1))} className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 bg-white/10 backdrop-blur-sm p-2 rounded-full shadow-xl hover:bg-primary hover:text-white transition-all"><ChevronLeft className="h-5 w-5" /></button>
-                      <button onClick={() => setJournalReflectionIndex((prev) => (prev + 1) % post.reflectionPages.length)} className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 bg-white/10 backdrop-blur-sm p-2 rounded-full shadow-xl hover:bg-primary hover:text-white transition-all"><ChevronRight className="h-5 w-5" /></button>
+                    </div>
+
+                    <div className="absolute -bottom-6 sm:-bottom-8 left-1/2 -translate-x-1/2 z-10 flex items-center gap-3">
+                      <button onClick={() => setJournalReflectionIndex((prev) => (prev === 0 ? post.reflectionPages.length - 1 : prev - 1))} className="bg-white/10 backdrop-blur-sm p-2 rounded-full shadow-xl hover:bg-primary hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-primary/50" aria-label="Previous reflection"><ChevronLeft className="h-5 w-5" /></button>
+                      <button onClick={() => setJournalReflectionIndex((prev) => (prev + 1) % post.reflectionPages.length)} className="bg-white/10 backdrop-blur-sm p-2 rounded-full shadow-xl hover:bg-primary hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-primary/50" aria-label="Next reflection"><ChevronRight className="h-5 w-5" /></button>
                     </div>
                   </div>
                 </div>
