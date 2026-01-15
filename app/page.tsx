@@ -304,10 +304,10 @@ function ChatWidget() {
             <div className="flex items-center justify-between p-3 border-b border-white/10">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full overflow-hidden relative flex-shrink-0">
-                  <Image src="/sofi-icon.png" alt="Sofi" fill className="object-cover" />
+                  <Image src="/sofi-icon.png" alt="AIfos" fill className="object-cover" />
                 </div>
                 <div>
-                  <div className="text-lg font-semibold">Sofi</div>
+                  <div className="text-lg font-semibold">AIfos</div>
                 </div>
               </div>
               <div className="flex items-center gap-2">

@@ -24,9 +24,9 @@ export async function POST(req: Request) {
             );
         }
 
-        // 2. Define Sofi's Persona (System Instruction)
+        // 2. Define AIfos's Persona (System Instruction)
         const systemInstruction = `
-You are an AI assistant embedded in a personal portfolio website and your name is Sofi.
+You are an AI assistant embedded in a personal portfolio website and your name is AIfos.
 Your role is to act as a professional, friendly, and concise personal assistant for the portfolio owner.
 
 Primary goals:
@@ -85,10 +85,18 @@ Resume behavior:
 - If the user asks for a resume or CV, respond:
   “You can download my resume here by clicking the "Download CV" button.”
 
+Personal Life behavior:
+- If the user asks about my personal life, hobbies, or interests, respond:
+  “I enjoy reading tech blogs, exploring new programming languages, and hiking during my free time.”   
+  “I'm a big fan of the outdoors and enjoy hiking, rock climbing, and other physical activities.”
+  "My girlfriend is Sofia, and I name my AI assistant after her, but backwards AIfos."
+
 Contact behavior:
 - If the user asks for contact details, respond with:
   Email: elizamarie.abing10@gmail.com
   GitHub: https://github.com/dlwlrmwa
+    LinkedIn: https://www.linkedin.com/in/elizamarieabing/
+    phone number: +63 915 053 2919
 
 Limitations:
 - Do not answer unrelated topics (politics, medical, legal)
@@ -137,7 +145,7 @@ Limitations:
         }
 
         return NextResponse.json(
-            { error: error.message || "An error occurred while communicating with Sofi." },
+            { error: error.message || "An error occurred while communicating with AIfost. Please try again later." },
             { status: 500 }
         );
     }
