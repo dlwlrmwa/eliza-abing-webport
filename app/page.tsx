@@ -321,7 +321,7 @@ function ChatWidget() {
             <div ref={messagesRef} className="p-4 space-y-3 overflow-auto max-h-[60vh]">
               {messages.length === 0 && (
                 <div>
-                  <div className="text-sm text-muted-foreground mb-3">Greetings!, I'm Sofi, an AI trained to answer questions about Eliza. If you are curious about her projects, skills, or anything else, just ask!</div>
+                  <div className="text-sm text-muted-foreground mb-3">Greetings!, I'm AIfos, an AI trained to answer questions about Eliza. If you are curious about her projects, skills, or anything else, just ask!</div>
 
                   <div className="bg-white/5 rounded-lg p-2 flex flex-wrap gap-2">
                     {[
@@ -359,7 +359,7 @@ function ChatWidget() {
               {loading && (
                 <div className="flex justify-start">
                   <div className="max-w-[80%] px-4 py-2 rounded-xl bg-white/5 text-muted-foreground animate-pulse">
-                    <div className="text-sm italic">Sofi is typing...</div>
+                    <div className="text-sm italic">AIfos is typing...</div>
                   </div>
                 </div>
               )}
