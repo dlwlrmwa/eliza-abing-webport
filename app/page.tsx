@@ -882,7 +882,7 @@ export default function HomePage() {
                         size="lg"
                         className="w-full rounded-full bg-primary text-black/85 shadow-md hover:bg-primary/90"
                       >
-                        Chat with Sofi!<MessageCircle className="ml-2 h-4 w-4" />
+                        Chat with AIfos!<MessageCircle className="ml-2 h-4 w-4" />
                       </Button>
                     </div>
                   </div>
