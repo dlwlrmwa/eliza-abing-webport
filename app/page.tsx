@@ -82,14 +82,15 @@ const projects = [
   },
   {
     id: 4,
-    title: "QuizWiz",
+    title: "Pick For Us",
     description:
-      "An interactive quiz application assessment tool featuring dynamic question handling and instant feedback.",
+      "Kainan roulette for indecisive couples (and friend groups). Set budget, spin wheel, end the debate.",
     images: [
-      { src: "/quizwiz.JPG", description: "Quiz creation interface with multiple question types" },
+      { src: "/pickforus.png", description: "Desktop View" },
+      { src: "/pickforus1.png", description: "Mobile View" },
     ],
-    tags: ["React", "API Integration", "Charts"],
-    github: "https://github.com/dlwlrmwa/QuizWiz",
+    tags: ["React", "TypeScript", "Tailwind"],
+    github: "https://github.com/dlwlrmwa/Pick-For-Us",
     demo: "#",
   },
   {
