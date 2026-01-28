@@ -50,8 +50,79 @@ const projects = [
       { src: "/1project/amari4.png", description: "Sales analytics and reporting dashboard" },
     ],
     tags: ["Next.js", "TypeScript", "Supabase"],
-    github: "https://github.com/dlwlrmwa/Amari-POS-and-Inventory-Management-System",
-    demo: "#",
+    livePreview: "https://amari-pos-with-inventory-management.vercel.app/",
+  },
+  {
+    id: 3,
+    title: "Website Portfolio",
+    description:
+      "Responsive personal portfolio built from scratch with a focus on clean UI and polished UX.",
+    images: [
+      { src: "/webport.png", description: "#" },
+    ],
+    tags: ["Next.js", "Typescript", "Tailwind"],
+    livePreview: "https://eliza-abing-port.vercel.app/",
+  },
+    {
+    id: 6,
+    title: "Arche Interior Design",
+    description:
+      "A sophisticated interior design showcase platform featuring modern layouts and elegant design elements.",
+    images: [
+      { src: "/arche.png", description: "Interior design showcase" },
+    ],
+    tags: ["HTML", "CSS", "JAVASCRIPT"],
+    livePreview: "https://arche-interior-design.vercel.app/",
+  },
+  {
+    id: 5,
+    title: "Lumiere Room Rentals",
+    description:
+      "A modern room rental platform with seamless booking experience and property management features.",
+    images: [
+      { src: "/lumiere.png", description: "Room rental dashboard" },
+    ],
+    tags: ["Next.js", "TypeScript", "Tailwind"],
+    livePreview: "https://lumiere-room-rentals.vercel.app/",
+  },
+    {
+    id: 4,
+    title: "Pick For Us",
+    description:
+      "Kainan roulette for indecisive couples (and friend groups). Set budget, spin wheel, end the debate.",
+    images: [
+      { src: "/pickforus.png", description: "Desktop View" },
+      { src: "/pickforus1.png", description: "Mobile View" },
+    ],
+    tags: ["React", "TypeScript", "Tailwind"],
+    livePreview: "https://pickforus.vercel.app/",
+  },
+  {
+    id: 7,
+    title: "TaskMate",
+    description:
+      "A collaborative task management tool with real-time updates and team features.",
+    images: [
+      { src: "/taskmate.jpg", description: "Task board with drag-and-drop functionality" },
+    ],
+    tags: ["Next.js", "Supabase", "Tailwind"],
+    github: "https://github.com/dlwlrmwa/TaskMate",
+    livePreview: null,
+  },
+  {
+    id: 8,
+    title: "Chrome Locker",
+    description:
+      "A privacy-focused browser extension that allows users to password-protect tabs.",
+    images: [
+      { src: "/chrome-locker.png", description: "Extension popup with lock interface" },
+      { src: "/chrome-locker.png", description: "Password setup and security settings" },
+      { src: "/chrome-locker.png", description: "Tab protection and unlock mechanism" },
+      { src: "/chrome-locker.png", description: "Privacy dashboard and activity log" },
+    ],
+    tags: ["HTML", "CSS", "Javascript", "JSON"],
+    github: "https://github.com/jieuneli/Chrome-Locker-Extension",
+    livePreview: null,
   },
   {
     id: 2,
@@ -65,60 +136,7 @@ const projects = [
       { src: "/gallery/15.jpg", description: "Group photo at the Loboc River Cruise" },
     ],
     tags: [" 📍 Cebu", " 📍 Bohol"],
-    github: "#",
-    demo: "journal",
-  },
-  {
-    id: 3,
-    title: "Website Portfolio",
-    description:
-      "Responsive personal portfolio built from scratch with a focus on clean UI and polished UX.",
-    images: [
-      { src: "/webport.png", description: "#" },
-    ],
-    tags: ["Next.js", "Typescript", "Tailwind"],
-    github: "https://github.com/dlwlrmwa/eliza-abing-webport",
-    demo: "https://eliza-abing-port.vercel.app/",
-  },
-  {
-    id: 4,
-    title: "Pick For Us",
-    description:
-      "Kainan roulette for indecisive couples (and friend groups). Set budget, spin wheel, end the debate.",
-    images: [
-      { src: "/pickforus.png", description: "Desktop View" },
-      { src: "/pickforus1.png", description: "Mobile View" },
-    ],
-    tags: ["React", "TypeScript", "Tailwind"],
-    github: "https://github.com/dlwlrmwa/Pick-For-Us",
-    demo: "#",
-  },
-  {
-    id: 5,
-    title: "TaskMate",
-    description:
-      "A collaborative task management tool with real-time updates and team features.",
-    images: [
-      { src: "/taskmate.jpg", description: "Task board with drag-and-drop functionality" },
-    ],
-    tags: ["Next.js", "Supabase", "Tailwind"],
-    github: "https://github.com/dlwlrmwa/TaskMate",
-    demo: "#",
-  },
-  {
-    id: 6,
-    title: "Chrome Locker",
-    description:
-      "A privacy-focused browser extension that allows users to password-protect tabs.",
-    images: [
-      { src: "/chrome-locker.png", description: "Extension popup with lock interface" },
-      { src: "/chrome-locker.png", description: "Password setup and security settings" },
-      { src: "/chrome-locker.png", description: "Tab protection and unlock mechanism" },
-      { src: "/chrome-locker.png", description: "Privacy dashboard and activity log" },
-    ],
-    tags: ["HTML", "CSS", "Javascript", "JSON"],
-    github: "https://github.com/jieuneli/Chrome-Locker-Extension",
-    demo: "#",
+    livePreview: null,
   },
 ]
 
@@ -389,6 +407,8 @@ export default function HomePage() {
   const [selectedProject, setSelectedProject] = useState<(typeof projects)[0] | null>(null)
   const [isVisible, setIsVisible] = useState(false)
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const projectsPerPage = 3
 
   useEffect(() => {
     setIsVisible(true)
@@ -415,6 +435,17 @@ export default function HomePage() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
     element?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+
+  // Pagination calculations
+  const totalPages = Math.ceil(projects.length / projectsPerPage)
+  const startIndex = (currentPage - 1) * projectsPerPage
+  const endIndex = startIndex + projectsPerPage
+  const currentProjects = projects.slice(startIndex, endIndex)
+
+  const goToPage = (page: number) => {
+    setCurrentPage(page)
+    setTimeout(() => scrollToSection("projects"), 100)
   }
 
   return (
@@ -613,24 +644,21 @@ export default function HomePage() {
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">Featured Projects</h2>
               <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">Explore my latest work and creative solutions</p>
+              <div className="flex items-center justify-center gap-2 mt-6">
+                <span className="text-sm text-muted-foreground">Page {currentPage} of {totalPages}</span>
+              </div>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
-              {projects.map((project) => (
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              {currentProjects.map((project) => (
                 <article
                   key={project.id}
-                  onClick={() => {
-                    if (project.id === 2) {
-                      router.push("/journal");
-                    } else {
-                      setSelectedProject(project);
-                    }
-                  }}
                   className={`group bg-card rounded-xl border transition-all duration-500 cursor-pointer flex flex-col relative pt-1 px-1 ${project.id === 2
                     ? "sparkle-border-container border-transparent shadow-[0_0_100px_rgba(255,105,180,0.3)]"
-                    : "border-border hover:border-primary"
+                    : "border-border hover:border-primary hover:shadow-xl"
                     }`}
                 >
-                  {/* Must See Badge Overlay */}
+                  {/* Must See Badge */}
                   {project.id === 2 && (
                     <div className="absolute top-5 left-5 z-30 flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary text-black/80 text-[10px] font-bold uppercase tracking-wider shadow-lg">
                       <span className="relative flex h-2 w-2">
@@ -641,90 +669,171 @@ export default function HomePage() {
                     </div>
                   )}
 
-                  {/* PHOTO SECTION */}
+                  {/* Live Badge */}
+                  {project.livePreview && project.id !== 2 && (
+                    <div className="absolute top-5 right-5 z-20 flex items-center gap-1.5 px-2.5 py-1 bg-green-500/90 backdrop-blur-sm rounded-full shadow-lg">
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
+                      </span>
+                      <span className="text-white text-[9px] font-bold uppercase tracking-wider">Live</span>
+                    </div>
+                  )}
+
+                  {/* Preview Section */}
                   <div
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedProject(project);
+                    onClick={() => {
+                      if (project.id === 2) {
+                        router.push("/journal")
+                      } else if (!project.livePreview) {
+                        setSelectedProject(project)
+                      }
                     }}
-                    // Changed rounded-t to rounded-xl so the image has rounded corners all around inside the card
-                    className="relative aspect-video overflow-hidden bg-secondary cursor-zoom-in rounded-xl"
+                    className={`relative aspect-video overflow-hidden bg-secondary rounded-xl ${!project.livePreview ? 'cursor-zoom-in' : ''}`}
                   >
-                    <Image
-                      src={project.images[0].src}
-                      alt={project.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-all duration-500"
-                    />
-                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
+                    {project.livePreview ? (
+                      <div className="relative w-full h-full overflow-hidden">
+                        <iframe
+                          src={project.livePreview}
+                          className="absolute top-0 left-0 border-0 pointer-events-none"
+                          style={{
+                            width: '1355px',
+                            height: '750px',
+                            transform: 'scale(0.3)',
+                            transformOrigin: 'top left'
+                          }}
+                          title={`Preview of ${project.title}`}
+                          loading="lazy"
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        <Image
+                          src={project.images[0].src}
+                          alt={project.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-all duration-500"
+                        />
+                        <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
+                      </>
+                    )}
                   </div>
 
-                  {/* CONTENT SECTION */}
+                  {/* Content Section */}
                   <div className="p-5 flex-1 flex flex-col">
-                    <h3 className="text-xl font-serif font-semibold mb-2 text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
+                    <h3 className="text-xl font-serif font-semibold mb-2 text-foreground group-hover:text-primary transition-colors">
                       {project.title}
-                      {project.id === 2 && <span className="animate-pulse"></span>}
                     </h3>
                     <p className="text-sm text-muted-foreground mb-4 leading-relaxed line-clamp-2">
                       {project.description}
                     </p>
                     <div className="flex flex-wrap gap-2 mb-4 mt-auto">
                       {project.tags.map((tag) => (
-                        <span key={tag} className="text-[10px] px-3 py-1 bg-secondary text-secondary-foreground rounded-full font-bold uppercase">
+                        <span key={tag} className="text-[10px] px-3 py-1 bg-primary/10 text-primary rounded-full font-semibold uppercase">
                           {tag}
                         </span>
                       ))}
                     </div>
 
-                    {/* ACTION BUTTONS */}
+                    {/* Action Buttons */}
                     <div className="flex gap-3">
                       {project.id === 2 ? (
                         <Button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            router.push("/journal");
-                          }}
+                          onClick={() => router.push("/journal")}
                           size="sm"
-                          className="rounded-full flex-1 bg-primary hover:bg-primary/90 text-black/85 shadow-md transition-all active:scale-95 cursor-pointer"
+                          className="rounded-full flex-1 bg-primary hover:bg-primary/90 text-black/85 shadow-md transition-all active:scale-95"
                         >
-                          View My Journal
+                          View Journal
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
                       ) : (
                         <>
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              const url = project.github;
-                              if (url && url !== "#") window.open(url, "_blank", "noopener,noreferrer");
-                            }}
-                            disabled={!(project.github && project.github !== "#")}
-                            size="sm" variant="outline" className={`rounded-full flex-1 ${!(project.github && project.github !== "#") ? 'opacity-60 cursor-not-allowed' : ''}`}
-                          >
-                            <Github className="mr-2 h-4 w-4" />Code
-                          </Button>
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              const demo = project.demo;
-                              if (demo && demo !== "#") {
-                                // open external demo link
-                                window.open(demo, "_blank", "noopener,noreferrer");
-                              } else {
-                                setSelectedProject(project);
-                              }
-                            }}
-                            size="sm" className="rounded-full flex-1 bg-primary hover:bg-primary/90 cursor-pointer"
-                          >
-                            <ExternalLink className="mr-2 h-4 w-4" /> Demo
-
-                          </Button>
+                          {project.github && project.github !== "#" && (
+                            <Button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                window.open(project.github, "_blank", "noopener,noreferrer")
+                              }}
+                              size="sm"
+                              variant="outline"
+                              className="rounded-full flex-1"
+                            >
+                              <Github className="mr-2 h-4 w-4" />
+                              Code
+                            </Button>
+                          )}
+                          {project.livePreview ? (
+                            <Button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                window.open(project.livePreview, "_blank", "noopener,noreferrer")
+                              }}
+                              size="sm"
+                              className="rounded-full flex-1 bg-primary hover:bg-primary/90"
+                            >
+                              <ExternalLink className="mr-2 h-4 w-4" />
+                              Live Site
+                            </Button>
+                          ) : (
+                            <Button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                setSelectedProject(project)
+                              }}
+                              size="sm"
+                              className="rounded-full flex-1 bg-primary hover:bg-primary/90"
+                            >
+                              <ExternalLink className="mr-2 h-4 w-4" />
+                              Gallery
+                            </Button>
+                          )}
                         </>
                       )}
                     </div>
                   </div>
                 </article>
               ))}
+            </div>
+
+            {/* Pagination Controls */}
+            <div className="flex items-center justify-center gap-2">
+              <Button
+                onClick={() => goToPage(currentPage - 1)}
+                disabled={currentPage === 1}
+                variant="outline"
+                size="lg"
+                className="rounded-full px-6"
+              >
+                <ChevronLeft className="h-5 w-5" />
+                Previous
+              </Button>
+              
+              <div className="flex gap-2 mx-4">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => goToPage(page)}
+                    className={`w-10 h-10 rounded-full font-semibold transition-all ${
+                      currentPage === page
+                        ? "bg-primary text-black scale-110"
+                        : "bg-white/10 hover:bg-white/20 text-muted-foreground hover:text-primary"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
+
+              <Button
+                onClick={() => goToPage(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                variant="outline"
+                size="lg"
+                className="rounded-full px-6"
+              >
+                Next
+                <ChevronRight className="h-5 w-5" />
+              </Button>
             </div>
           </div>
         </section>
